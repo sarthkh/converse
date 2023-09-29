@@ -17,7 +17,7 @@ ToastFuture toastInfo({
   required BuildContext context,
   required String msg,
   required ToastType type,
-  Duration duration = const Duration(milliseconds: 2000),
+  Duration duration = const Duration(milliseconds: 2500),
   Duration animDuration = const Duration(milliseconds: 1000),
   ColorFilter colorFilter = const ColorFilter.mode(
     Palette.lightWhite,

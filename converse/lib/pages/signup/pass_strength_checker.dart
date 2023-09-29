@@ -1,27 +1,28 @@
+import 'package:converse/theme/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class PassStrengthChecker extends ConsumerWidget {
-  const PassStrengthChecker({Key? key}) : super(key: key);
+  const PassStrengthChecker({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final strength = ref.watch(passwordStrengthProvider);
 
     return Container(
-      width: 345,
+      width: 340,
       height: 5,
       margin: const EdgeInsets.symmetric(vertical: 25),
       child: LinearProgressIndicator(
         value: strength,
         backgroundColor: Theme.of(context).colorScheme.secondary,
         color: strength <= 1 / 4
-            ? Colors.red
+            ? Palette.red
             : strength == 2 / 4
-                ? Colors.yellow
+                ? Palette.yellow
                 : strength == 3 / 4
-                    ? Colors.blue
-                    : Colors.green,
+                    ? Palette.blue
+                    : Palette.green,
         borderRadius: BorderRadius.circular(2),
       ),
     );
@@ -58,12 +59,6 @@ class PasswordStrengthNotifier extends StateNotifier<double> {
         // length >= 8 and contains both letter and digit characters
         state = 4 / 4;
       }
-    }
-
-    @override
-    void dispose() {
-      state = 0;
-      super.dispose();
     }
   }
 }

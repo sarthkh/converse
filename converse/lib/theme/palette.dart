@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Palette {
   // colors
@@ -14,6 +15,10 @@ class Palette {
   static const Color lightDrawer = Color.fromARGB(255, 230, 230, 230);
   static const Color lightBlue = Color.fromARGB(255, 176, 196, 222);
   static const Color darkBlue = Color.fromARGB(255, 8, 37, 103);
+  static const Color red = Color.fromARGB(255, 208, 61, 51);
+  static const Color yellow = Color.fromARGB(255, 254, 220, 86);
+  static const Color blue = Color.fromARGB(255, 46, 88, 148);
+  static const Color green = Color.fromARGB(255, 46, 139, 87);
 
   // dark theme
   static final darkTheme = ThemeData.dark().copyWith(
@@ -37,7 +42,7 @@ class Palette {
       onPrimary: darkWhite,
       secondary: darkGrey,
       onSecondary: darkWhite,
-      error: Colors.red,
+      error: red,
       onError: darkWhite,
       background: lightBlack,
       onBackground: darkWhite,
@@ -69,7 +74,7 @@ class Palette {
       onPrimary: lightWhite,
       secondary: lightGrey,
       onSecondary: darkBlack,
-      error: Colors.red,
+      error: red,
       onError: lightWhite,
       background: lightWhite,
       onBackground: darkBlack,

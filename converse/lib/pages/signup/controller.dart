@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:converse/common/widgets/popup_message.dart';
-import 'package:converse/pages/signup/notifier/signup_notifier.dart';
+import 'notifier/signup_notifier.dart';
 
 class SignUpController {
   late WidgetRef ref;
@@ -16,21 +16,47 @@ class SignUpController {
     String password = state.password;
     String rePassword = state.rePassword;
 
-    if (!RegExp(r'^[a-zA-Z0-9_]{5,}$').hasMatch(name)) {
+    if (!RegExp(r'^[a-zA-Z0-9_]{5,25}$').hasMatch(name)) {
       toastInfo(
         context: context,
         type: ToastType.alert,
         msg:
-            "Username is invalid. It should be at least 5 characters long and consist of alphanumeric characters and underscores.",
+            "Hold on, your username should be 5-25 characters long and can include letters, numbers, and underscores.",
       );
       return;
     }
 
-    if (!RegExp(r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+').hasMatch(email)) {
+    if (!RegExp(r'\S+@\S+\.\S+').hasMatch(email)) {
       toastInfo(
         context: context,
         type: ToastType.alert,
-        msg: "Please enter a valid email!",
+        msg: "Oops, that email doesn't look right. Try again?",
+      );
+      return;
+    }
+
+    if (password.isEmpty) {
+      toastInfo(
+        context: context,
+        msg: "Hey, your password can't be left blank.",
+        type: ToastType.alert,
+      );
+      return;
+    } else if (password.length < 5) {
+      toastInfo(
+        context: context,
+        msg:
+            "Just a heads up, your password should be at least 5 characters long.",
+        type: ToastType.alert,
+      );
+      return;
+    }
+
+    if (rePassword.isEmpty) {
+      toastInfo(
+        context: context,
+        type: ToastType.alert,
+        msg: "Oops, you forgot to confirm your password.",
       );
       return;
     }
@@ -39,7 +65,7 @@ class SignUpController {
       toastInfo(
         context: context,
         type: ToastType.alert,
-        msg: "Passwords do not match!",
+        msg: "Hmm, passwords don't match. Try again?",
       );
       return;
     }
