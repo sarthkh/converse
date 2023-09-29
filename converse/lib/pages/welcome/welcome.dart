@@ -136,11 +136,12 @@ Widget _nextButton(int index, PageController controller, BuildContext context) {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setBool('onboardingComplete', true);
 
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          "login",
-          (route) => false,
-        );
+        if (context.mounted) {
+          Navigator.pushNamed(
+            context,
+            "login",
+          );
+        }
       }
     },
     child: AnimatedContainer(

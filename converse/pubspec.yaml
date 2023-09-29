@@ -48,6 +48,7 @@ dependencies:
   flutter_native_splash: ^2.3.2
   percent_indicator: ^4.2.3
   adaptive_theme: ^3.4.0
+  icons_launcher: ^2.1.4
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +67,19 @@ flutter_native_splash:
   image_dark: assets/images/pngs/splash/icon_light.png
   color_dark: "#000000"
 
+icons_launcher:
+  platforms:
+    android:
+      enable: true
+      image_path: assets/images/pngs/splash/icon_dark.png
+    windows:
+      enable: true
+      image_path: assets/images/pngs/splash/icon_light.png
+    web:
+      enable: true
+      image_path: assets/images/pngs/splash/icon_light.png
+      favicon_path: assets/images/pngs/favicon/icon_light.png
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -79,29 +93,33 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     # splash
-     - assets/images/pngs/splash/icon_dark.png
-     - assets/images/pngs/splash/icon_light.png
-     # icon
-     - assets/images/svgs/icon/icon_dark.svg
-     - assets/images/svgs/icon/icon_light.svg
-     # welcome
-     - assets/images/svgs/welcome/odyssey.svg
-     - assets/images/svgs/welcome/expedition.svg
-     - assets/images/svgs/welcome/conversation.svg
-     - assets/images/svgs/welcome/divein.svg
-     - assets/images/svgs/welcome/skip.svg
-     # register
-     - assets/images/svgs/register/google.svg
-     - assets/images/svgs/register/facebook.svg
-     - assets/images/svgs/register/x.svg
-     - assets/images/svgs/register/user.svg
-     - assets/images/svgs/register/mail.svg
-     - assets/images/svgs/register/lock.svg
-     - assets/images/svgs/register/info.svg
-     - assets/images/svgs/register/pass.svg
-     - assets/images/svgs/register/fail.svg
-     - assets/images/svgs/register/alert.svg
+    # favicon
+    - assets/images/pngs/favicon/icon_light.png
+    # splash
+    - assets/images/pngs/splash/icon_dark.png
+    - assets/images/pngs/splash/icon_light.png
+    # icon
+    - assets/images/svgs/icon/icon_dark.svg
+    - assets/images/svgs/icon/icon_light.svg
+    # welcome
+    - assets/images/svgs/welcome/odyssey.svg
+    - assets/images/svgs/welcome/expedition.svg
+    - assets/images/svgs/welcome/conversation.svg
+    - assets/images/svgs/welcome/divein.svg
+    - assets/images/svgs/welcome/skip.svg
+    # register
+    - assets/images/svgs/register/google.svg
+    - assets/images/svgs/register/facebook.svg
+    - assets/images/svgs/register/x.svg
+    - assets/images/svgs/register/user.svg
+    - assets/images/svgs/register/mail.svg
+    - assets/images/svgs/register/lock.svg
+    - assets/images/svgs/register/info.svg
+    - assets/images/svgs/register/pass.svg
+    - assets/images/svgs/register/fail.svg
+    - assets/images/svgs/register/alert.svg
+    - assets/images/svgs/register/show.svg
+    - assets/images/svgs/register/hide.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -115,29 +133,29 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-     - family: custom_light
-       fonts:
-         - asset: assets/fonts/light.ttf
+    - family: custom_light
+      fonts:
+        - asset: assets/fonts/light.ttf
 
-     - family: custom_regular
-       fonts:
-         - asset: assets/fonts/regular.ttf
+    - family: custom_regular
+      fonts:
+        - asset: assets/fonts/regular.ttf
 
-     - family: custom_medium
-       fonts:
-         - asset: assets/fonts/medium.ttf
+    - family: custom_medium
+      fonts:
+        - asset: assets/fonts/medium.ttf
 
-     - family: custom_semi-bold
-       fonts:
-         - asset: assets/fonts/semi-bold.ttf
+    - family: custom_semi-bold
+      fonts:
+        - asset: assets/fonts/semi-bold.ttf
 
-     - family: custom_bold
-       fonts:
-         - asset: assets/fonts/bold.ttf
+    - family: custom_bold
+      fonts:
+        - asset: assets/fonts/bold.ttf
 
-     - family: custom_extra-bold
-       fonts:
-         - asset: assets/fonts/extra-bold.ttf
+    - family: custom_extra-bold
+      fonts:
+        - asset: assets/fonts/extra-bold.ttf
 
   #
   # For details regarding fonts from package dependencies,

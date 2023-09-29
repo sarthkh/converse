@@ -4,6 +4,7 @@ import 'package:converse/common/widgets/text_styles.dart';
 import 'package:converse/common/widgets/text_widgets.dart';
 import 'package:converse/common/widgets/app_decorations.dart';
 import 'package:converse/common/widgets/image_widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AppTextField extends ConsumerWidget {
   final String text;
@@ -57,6 +58,7 @@ class AppTextField extends ConsumerWidget {
                   height: 65,
                   alignment: Alignment.center,
                   child: TextField(
+                    cursorColor: Theme.of(context).hintColor,
                     onChanged: (value) {
                       if (func != null) {
                         func!(value);
@@ -88,11 +90,17 @@ class AppTextField extends ConsumerWidget {
                       ),
                       suffixIcon: isPasswordField
                           ? IconButton(
-                              icon: Icon(
-                                passwordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                              ),
+                              icon: passwordVisible
+                                  ? authImage(
+                                      imagePath:
+                                          "assets/images/svgs/register/show.svg",
+                                      color: Theme.of(context).hintColor,
+                                    )
+                                  : authImage(
+                                      imagePath:
+                                          "assets/images/svgs/register/hide.svg",
+                                      color: Theme.of(context).hintColor,
+                                    ),
                               onPressed: obscureTextProvider != null
                                   ? () {
                                       ref
