@@ -1,4 +1,4 @@
-<span style="color:red; text-decoration: underline">CAUTION</span>
+$${\color{red}CAUTION}$$
 
 *This project is intended for the specific recipients only.*
 
