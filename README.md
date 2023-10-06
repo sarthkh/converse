@@ -1,4 +1,4 @@
-<div align="left">**CAUTION**</div>
+**CAUTION**
 
 **This project is intended for the specific recipients only.**
 
