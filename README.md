@@ -1,4 +1,4 @@
-$${\color{red}*CAUTION*}$$
+<p align="left">$${\color{red}**CAUTION**}$$</p>
 
 **This project is intended for the specific recipients only.**
 
