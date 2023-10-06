@@ -1,3 +1,5 @@
+import 'package:converse/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,7 +14,13 @@ import 'package:converse/pages/welcome/welcome.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Future.delayed(const Duration(milliseconds: 500));
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  await Future.delayed(
+    const Duration(milliseconds: 500),
+  );
   FlutterNativeSplash.remove();
 
   final prefs = await SharedPreferences.getInstance();

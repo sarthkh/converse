@@ -49,6 +49,11 @@ dependencies:
   percent_indicator: ^4.2.3
   adaptive_theme: ^3.4.1
   icons_launcher: ^2.1.4
+  firebase_core: ^2.17.0
+  firebase_storage: ^11.2.8
+  cloud_firestore: ^4.9.3
+  firebase_auth: ^4.10.1
+  google_sign_in: ^6.1.5
 
 dev_dependencies:
   flutter_test:
