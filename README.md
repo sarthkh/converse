@@ -1,4 +1,4 @@
-$${\color{red}**CAUTION**}$$
+$${\color{red}*CAUTION*}$$
 
 **This project is intended for the specific recipients only.**
 
