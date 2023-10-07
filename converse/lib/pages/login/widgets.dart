@@ -1,7 +1,13 @@
+import 'package:converse/auth/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-Widget thirdPartyLogin(BuildContext context) {
+void googleSignIn(BuildContext context, WidgetRef ref) {
+  ref.read(authControllerProvider).googleSignIn(context);
+}
+
+Widget thirdPartyLogin(BuildContext context, WidgetRef ref) {
   return Container(
     margin: const EdgeInsets.only(
       left: 75,
@@ -16,14 +22,17 @@ Widget thirdPartyLogin(BuildContext context) {
         _loginButton(
           context: context,
           imagePath: "assets/images/svgs/register/google.svg",
+          onTap: () => googleSignIn(context, ref),
         ),
         _loginButton(
           context: context,
           imagePath: "assets/images/svgs/register/facebook.svg",
+          onTap: () {},
         ),
         _loginButton(
           context: context,
           imagePath: "assets/images/svgs/register/x.svg",
+          onTap: () {},
         ),
       ],
     ),
@@ -33,9 +42,10 @@ Widget thirdPartyLogin(BuildContext context) {
 Widget _loginButton({
   required BuildContext context,
   required String imagePath,
+  required Function() onTap,
 }) {
   return GestureDetector(
-    onTap: () {},
+    onTap: onTap,
     child: SizedBox(
       width: 35,
       height: 35,

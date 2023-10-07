@@ -43,7 +43,7 @@ class Login extends ConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   // top login buttons
-                  thirdPartyLogin(context),
+                  thirdPartyLogin(context, ref),
                   // more login option message
                   Center(
                     child: text16Regular(
