@@ -12,9 +12,20 @@ class Home extends ConsumerWidget {
 
     return Scaffold(
       body: Center(
-        child: text20ExtraBold(
-          context: context,
-          text: user.name,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            text20ExtraBold(
+              context: context,
+              text: user.name,
+            ),
+            const SizedBox(height: 25),
+            text20ExtraBold(
+              context: context,
+              text: user.karma.toString(),
+            ),
+          ],
         ),
       ),
     );

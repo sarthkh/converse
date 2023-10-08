@@ -7,26 +7,29 @@ class Loader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        BackdropFilter(
-          filter: ui.ImageFilter.blur(
-            sigmaX: 5,
-            sigmaY: 5,
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          BackdropFilter(
+            filter: ui.ImageFilter.blur(
+              sigmaX: 5,
+              sigmaY: 5,
+            ),
+            child: Container(
+              color: Theme.of(context).cardColor.withOpacity(0.125),
+            ),
           ),
-          child: Container(
-            color: Theme.of(context).cardColor.withOpacity(0.125),
+          Center(
+            child: LoadingAnimationWidget.flickr(
+              leftDotColor: Theme.of(context).hintColor,
+              rightDotColor: Theme.of(context).colorScheme.secondary,
+              size: 75,
+            ),
           ),
-        ),
-        Center(
-          child: LoadingAnimationWidget.flickr(
-            leftDotColor: Theme.of(context).hintColor,
-            rightDotColor: Theme.of(context).colorScheme.secondary,
-            size: 75,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
