@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 void googleSignIn(BuildContext context, WidgetRef ref) {
-  ref.read(authControllerProvider).googleSignIn(context);
+  ref.read(authControllerProvider.notifier).googleSignIn(context);
 }
 
 Widget thirdPartyLogin(BuildContext context, WidgetRef ref) {

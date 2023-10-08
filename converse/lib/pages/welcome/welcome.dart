@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:converse/common/widgets/app_bar.dart';
@@ -137,10 +138,7 @@ Widget _nextButton(int index, PageController controller, BuildContext context) {
         await prefs.setBool('onboardingComplete', true);
 
         if (context.mounted) {
-          Navigator.pushNamed(
-            context,
-            "login",
-          );
+          GoRouter.of(context).pushNamed('login');
         }
       }
     },
