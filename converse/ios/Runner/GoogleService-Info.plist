@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CLIENT_ID</key>
+	<string>275674125120-7q3f2h72j7a1s1rnp9vvksa5pifm29js.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.275674125120-7q3f2h72j7a1s1rnp9vvksa5pifm29js</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>275674125120-5jl9cnrgvedogpo989i15f1p2e6qe3l9.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyC2ZumDqQntmDsLKHs4fDPo25tRRwtHa_0</string>
 	<key>GCM_SENDER_ID</key>
@@ -9,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.converse</string>
+	<string>tech.sarthakz25.converse</string>
 	<key>PROJECT_ID</key>
 	<string>converse-software</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:275674125120:ios:03864333db321f3851e0a5</string>
+	<string>1:275674125120:ios:d054899289785d3251e0a5</string>
 </dict>
 </plist>

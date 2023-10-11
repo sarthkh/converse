@@ -1,4 +1,4 @@
-package com.example.converse
+package tech.sarthakz25.converse
 
 import io.flutter.embedding.android.FlutterActivity
 

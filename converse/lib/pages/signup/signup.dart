@@ -21,7 +21,7 @@ class SignUp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final signUpProvider = ref.watch(signUpNotifierProvider);
+    // final signUpProvider = ref.watch(signUpNotifierProvider);
 
     final bool isLightTheme =
         Theme.of(context).colorScheme.brightness == Brightness.light;

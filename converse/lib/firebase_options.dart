@@ -57,7 +57,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCSDblK5gENwnmIefw9aI-E8XKJT9QkhxQ',
-    appId: '1:275674125120:android:eaa1c05af2c759d551e0a5',
+    appId: '1:275674125120:android:60d7309764e2352051e0a5',
     messagingSenderId: '275674125120',
     projectId: 'converse-software',
     storageBucket: 'converse-software.appspot.com',
@@ -65,10 +65,14 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyC2ZumDqQntmDsLKHs4fDPo25tRRwtHa_0',
-    appId: '1:275674125120:ios:03864333db321f3851e0a5',
+    appId: '1:275674125120:ios:d054899289785d3251e0a5',
     messagingSenderId: '275674125120',
     projectId: 'converse-software',
     storageBucket: 'converse-software.appspot.com',
-    iosBundleId: 'com.example.converse',
+    androidClientId:
+        '275674125120-5jl9cnrgvedogpo989i15f1p2e6qe3l9.apps.googleusercontent.com',
+    iosClientId:
+        '275674125120-7q3f2h72j7a1s1rnp9vvksa5pifm29js.apps.googleusercontent.com',
+    iosBundleId: 'tech.sarthakz25.converse',
   );
 }

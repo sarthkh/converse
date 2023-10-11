@@ -4,7 +4,6 @@ import 'package:converse/common/widgets/text_styles.dart';
 import 'package:converse/common/widgets/text_widgets.dart';
 import 'package:converse/common/widgets/app_decorations.dart';
 import 'package:converse/common/widgets/image_widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class AppTextField extends ConsumerWidget {
   final String text;

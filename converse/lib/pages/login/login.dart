@@ -17,9 +17,9 @@ final passwordVisibleStateProvider = StateProvider<bool>((ref) {
 class Login extends ConsumerWidget {
   const Login({super.key});
 
-  void loginHandler() {
-    print("login");
-  }
+  // void loginHandler() {
+  //   print("login");
+  // }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

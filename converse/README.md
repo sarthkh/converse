@@ -1,6 +1,6 @@
 # converse
 
-A new Flutter project.
+Engage, Express, Explore.
 
 ## Getting Started
 
