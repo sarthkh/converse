@@ -6,15 +6,21 @@ import 'package:converse/common/widgets/app_decorations.dart';
 import 'package:converse/common/widgets/image_widgets.dart';
 
 class AppTextField extends ConsumerWidget {
+  final double width;
+  final double height;
   final String text;
   final String iconName;
   final String hintText;
   final StateProvider<bool>? obscureTextProvider;
   final void Function(String value)? func;
   final bool isPasswordField;
+  final int? maxLength;
 
   const AppTextField({
     super.key,
+    this.width = 365,
+    this.height = 65,
+    this.maxLength,
     required this.text,
     required this.iconName,
     required this.hintText,
@@ -36,8 +42,8 @@ class AppTextField extends ConsumerWidget {
           text16Regular(context: context, text: text),
           const SizedBox(height: 10),
           Container(
-            width: 345,
-            height: 65,
+            width: width,
+            height: height,
             decoration: appBoxDecorationTextField(
               context: context,
               color: Theme.of(context).scaffoldBackgroundColor,
@@ -57,6 +63,7 @@ class AppTextField extends ConsumerWidget {
                   height: 65,
                   alignment: Alignment.center,
                   child: TextField(
+                    maxLength: maxLength,
                     cursorColor: Theme.of(context).hintColor,
                     onChanged: (value) {
                       if (func != null) {

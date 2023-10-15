@@ -8,6 +8,7 @@ class Palette {
   static const Color darkWhite = Color.fromARGB(255, 235, 235, 235);
   static const Color lightGrey = Color.fromARGB(255, 168, 169, 173);
   static const Color darkGrey = Color.fromARGB(255, 105, 105, 105);
+  static const Color darkerGrey = Color.fromARGB(255, 85, 85, 85);
   static const Color lightBlack = Color.fromARGB(255, 22, 22, 24);
   static const Color darkBlack = Color.fromARGB(255, 2, 4, 3);
   static const Color darkDrawer = Color.fromARGB(255, 0, 0, 0);
@@ -24,6 +25,7 @@ class Palette {
     scaffoldBackgroundColor: lightBlack,
     cardColor: darkGrey,
     hintColor: darkWhite,
+    canvasColor: lightGrey,
     appBarTheme: const AppBarTheme(
       backgroundColor: lightBlack,
       elevation: 0,
@@ -55,7 +57,8 @@ class Palette {
   static final lightTheme = ThemeData.light().copyWith(
     scaffoldBackgroundColor: lightWhite,
     cardColor: lightGrey,
-    hintColor: darkGrey,
+    hintColor: darkerGrey,
+    canvasColor: darkGrey,
     appBarTheme: const AppBarTheme(
       backgroundColor: lightWhite,
       elevation: 0,

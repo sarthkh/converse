@@ -32,3 +32,19 @@ Widget appButton({
     ),
   );
 }
+
+Widget iconButton({
+  required Function() onPressed,
+  required Widget icon,
+  EdgeInsets? margin,
+  EdgeInsets? padding,
+}) {
+  return Container(
+    margin: margin,
+    padding: padding,
+    child: IconButton(
+      onPressed: onPressed,
+      icon: icon,
+    ),
+  );
+}

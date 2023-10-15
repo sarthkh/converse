@@ -1,3 +1,4 @@
+import 'package:converse/pages/conclave/screens/create_conclave.dart';
 import 'package:converse/pages/home/home.dart';
 import 'package:converse/pages/login/login.dart';
 import 'package:converse/pages/signup/signup.dart';
@@ -47,6 +48,13 @@ final loggedIn = GoRouter(
       path: '/',
       pageBuilder: (context, state) => const MaterialPage(
         child: Home(),
+      ),
+    ),
+    GoRoute(
+      name: 'create-conclave',
+      path: '/create-conclave',
+      pageBuilder: (context, state) => const MaterialPage(
+        child: CreateConclave(),
       ),
     ),
   ],

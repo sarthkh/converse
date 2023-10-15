@@ -6,11 +6,12 @@ AppBar buildAppbar({
   required bool bottom,
   required List<Widget>? actions,
   Widget? leadingWidget,
+  bool centerTitle = true,
   bool automaticallyImplyLeading = true,
 }) {
   return AppBar(
     title: title,
-    centerTitle: true,
+    centerTitle: centerTitle,
     bottom: bottom
         ? PreferredSize(
             preferredSize: const Size.fromHeight(0),

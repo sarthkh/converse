@@ -102,3 +102,31 @@ Widget textUnderline({
     ),
   );
 }
+
+Widget text22SemiBold({
+  required BuildContext context,
+  required String text,
+}) {
+  return Text(
+    text,
+    style: TextStyle(
+      fontFamily: 'custom_semi-bold',
+      fontSize: 22,
+      color: Theme.of(context).textTheme.bodyLarge!.color,
+    ),
+  );
+}
+
+Widget text20Medium({
+  required BuildContext context,
+  required String text,
+}) {
+  return Text(
+    text,
+    style: TextStyle(
+      fontFamily: 'custom_medium',
+      fontSize: 20,
+      color: Theme.of(context).textTheme.bodySmall!.color,
+    ),
+  );
+}
