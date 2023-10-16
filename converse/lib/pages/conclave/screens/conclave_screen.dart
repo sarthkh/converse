@@ -6,6 +6,7 @@ import 'package:converse/common/widgets/text_widgets.dart';
 import 'package:converse/pages/conclave/controller/conclave_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class ConclaveScreen extends ConsumerWidget {
   final String name;
@@ -14,6 +15,10 @@ class ConclaveScreen extends ConsumerWidget {
     super.key,
     required this.name,
   });
+
+  void navigateToModToolsScreen(BuildContext context) {
+    GoRouter.of(context).push('/mod-tools/$name');
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -66,7 +71,7 @@ class ConclaveScreen extends ConsumerWidget {
                               conclave.moderators.contains(user.uid)
                                   ? outlinedButton(
                                       context: context,
-                                      onPressed: () {},
+                                      onPressed: () => navigateToModToolsScreen(context),
                                       child: text17SemiBoldItalic(
                                         context: context,
                                         text: "Mod Tools",

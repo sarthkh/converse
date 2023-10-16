@@ -1,5 +1,7 @@
 import 'package:converse/pages/conclave/screens/conclave_screen.dart';
 import 'package:converse/pages/conclave/screens/craft_conclave_screen.dart';
+import 'package:converse/pages/conclave/screens/edit_conclave_screen.dart';
+import 'package:converse/pages/conclave/screens/mod_tools_screen.dart';
 import 'package:converse/pages/home/home.dart';
 import 'package:converse/pages/login/login.dart';
 import 'package:converse/pages/signup/signup.dart';
@@ -63,6 +65,24 @@ final loggedIn = GoRouter(
       path: '/c/:name',
       pageBuilder: (context, state) => MaterialPage(
         child: ConclaveScreen(
+          name: state.pathParameters['name']!,
+        ),
+      ),
+    ),
+    GoRoute(
+      name: 'mod-tools-screen',
+      path: '/mod-tools/:name',
+      pageBuilder: (context, state) => MaterialPage(
+        child: ModToolsScreen(
+          name: state.pathParameters['name']!,
+        ),
+      ),
+    ),
+    GoRoute(
+      name: 'edit-conclave-screen',
+      path: '/edit-conclave/:name',
+      pageBuilder: (context, state) => MaterialPage(
+        child: EditConclaveScreen(
           name: state.pathParameters['name']!,
         ),
       ),

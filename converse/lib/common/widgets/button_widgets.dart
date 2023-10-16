@@ -64,3 +64,13 @@ Widget outlinedButton({
     child: child,
   );
 }
+
+Widget textButton({
+  required Function() onPressed,
+  required Widget child,
+}) {
+  return TextButton(
+    onPressed: onPressed,
+    child: child,
+  );
+}
