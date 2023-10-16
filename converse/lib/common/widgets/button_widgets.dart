@@ -48,3 +48,19 @@ Widget iconButton({
     ),
   );
 }
+
+Widget outlinedButton({
+  required BuildContext context,
+  required Function() onPressed,
+  required Widget child,
+}) {
+  return OutlinedButton(
+    onPressed: onPressed,
+    style: OutlinedButton.styleFrom(
+      side: BorderSide(
+        color: Theme.of(context).primaryColor,
+      ),
+    ),
+    child: child,
+  );
+}

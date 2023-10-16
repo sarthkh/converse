@@ -1,4 +1,5 @@
-import 'package:converse/pages/conclave/screens/craft_conclave.dart';
+import 'package:converse/pages/conclave/screens/conclave_screen.dart';
+import 'package:converse/pages/conclave/screens/craft_conclave_screen.dart';
 import 'package:converse/pages/home/home.dart';
 import 'package:converse/pages/login/login.dart';
 import 'package:converse/pages/signup/signup.dart';
@@ -51,10 +52,19 @@ final loggedIn = GoRouter(
       ),
     ),
     GoRoute(
-      name: 'craft-conclave',
+      name: 'craft-conclave-screen',
       path: '/craft-conclave',
       pageBuilder: (context, state) => const MaterialPage(
-        child: CraftConclave(),
+        child: CraftConclaveScreen(),
+      ),
+    ),
+    GoRoute(
+      name: 'conclave-screen',
+      path: '/c/:name',
+      pageBuilder: (context, state) => MaterialPage(
+        child: ConclaveScreen(
+          name: state.pathParameters['name']!,
+        ),
       ),
     ),
   ],

@@ -21,6 +21,10 @@ final userConclavesProvider = StreamProvider((ref) {
   return conclaveController.getUserConclaves();
 });
 
+final getConclaveByNameProvider = StreamProvider.family((ref, String name) {
+  return ref.watch(conclaveControllerProvider.notifier).getConclaveByName(name);
+});
+
 class ConclaveController extends StateNotifier<bool> {
   final ConclaveRepository _conclaveRepository;
   final Ref _ref;
@@ -66,5 +70,9 @@ class ConclaveController extends StateNotifier<bool> {
   Stream<List<Conclave>> getUserConclaves() {
     final uid = _ref.read(userProvider)!.uid;
     return _conclaveRepository.getUserConclaves(uid);
+  }
+
+  Stream<Conclave> getConclaveByName(String name) {
+    return _conclaveRepository.getConclaveByName(name);
   }
 }

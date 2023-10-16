@@ -148,3 +148,46 @@ Widget textScroll17Regular({
     pauseBetween: const Duration(milliseconds: 2000),
   );
 }
+
+Widget text16Medium({
+  required BuildContext context,
+  required String text,
+}) {
+  return Text(
+    text,
+    style: TextStyle(
+      fontFamily: 'custom_medium',
+      fontSize: 16,
+      color: Theme.of(context).textTheme.bodySmall!.color,
+    ),
+  );
+}
+
+Widget text20SemiBold({
+  required BuildContext context,
+  required String text,
+}) {
+  return Text(
+    text,
+    style: TextStyle(
+      fontFamily: 'custom_semi-bold',
+      fontSize: 20,
+      color: Theme.of(context).textTheme.bodyMedium!.color,
+    ),
+    maxLines: 3,
+  );
+}
+
+Widget text17SemiBoldItalic({
+  required BuildContext context,
+  required String text,
+}) {
+  return Text(
+    text,
+    style: TextStyle(
+      fontFamily: 'custom_semi-bold-italic',
+      fontSize: 17,
+      color: Theme.of(context).textTheme.bodyLarge!.color,
+    ),
+  );
+}

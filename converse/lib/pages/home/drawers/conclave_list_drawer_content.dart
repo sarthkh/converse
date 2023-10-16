@@ -8,12 +8,18 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:go_router/go_router.dart';
 import 'package:converse/common/widgets/text_widgets.dart';
+import 'package:converse/models/conclave_model.dart';
 
 class ConclaveListDrawerContent extends ConsumerWidget {
   const ConclaveListDrawerContent({super.key});
 
-  void navigateToCraftConclave(BuildContext context) {
-    GoRouter.of(context).pushNamed('craft-conclave');
+  void navigateToCraftConclaveScreen(BuildContext context) {
+    GoRouter.of(context).pushNamed('craft-conclave-screen');
+    ZoomDrawer.of(context)?.close();
+  }
+
+  void navigateToConclave(BuildContext context, Conclave conclave) {
+    GoRouter.of(context).push('/c/${conclave.name}');
     ZoomDrawer.of(context)?.close();
   }
 
@@ -39,7 +45,7 @@ class ConclaveListDrawerContent extends ConsumerWidget {
                     BlendMode.srcIn,
                   ),
                 ),
-                onTap: () => navigateToCraftConclave(context),
+                onTap: () => navigateToCraftConclaveScreen(context),
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
                     width: 0.35,
@@ -66,7 +72,9 @@ class ConclaveListDrawerContent extends ConsumerWidget {
                                 context: context,
                                 text: "c/${conclave.name}",
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                navigateToConclave(context, conclave);
+                              },
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15),
                               ),

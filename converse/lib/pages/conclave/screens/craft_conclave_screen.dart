@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:converse/common/widgets/loader.dart';
 
-class CraftConclave extends ConsumerStatefulWidget {
-  const CraftConclave({super.key});
+class CraftConclaveScreen extends ConsumerStatefulWidget {
+  const CraftConclaveScreen({super.key});
 
   @override
-  ConsumerState createState() => _CraftConclaveState();
+  ConsumerState createState() => _CraftConclaveScreenState();
 }
 
-class _CraftConclaveState extends ConsumerState<CraftConclave> {
+class _CraftConclaveScreenState extends ConsumerState<CraftConclaveScreen> {
   final conclaveNameController = TextEditingController();
 
   @override

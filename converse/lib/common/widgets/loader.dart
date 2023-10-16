@@ -10,7 +10,6 @@ class Loader extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.ltr,
       child: Stack(
-        fit: StackFit.expand,
         children: [
           BackdropFilter(
             filter: ui.ImageFilter.blur(

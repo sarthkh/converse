@@ -57,4 +57,11 @@ class ConclaveRepository {
       return conclaves;
     });
   }
+
+  Stream<Conclave> getConclaveByName(String name) {
+    return _conclaves
+        .doc(name)
+        .snapshots()
+        .map((event) => Conclave.fromMap(event.data() as Map<String, dynamic>));
+  }
 }
