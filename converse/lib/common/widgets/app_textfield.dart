@@ -15,6 +15,7 @@ class AppTextField extends ConsumerWidget {
   final void Function(String value)? func;
   final bool isPasswordField;
   final int? maxLength;
+  final TextEditingController? controller;
 
   const AppTextField({
     super.key,
@@ -27,6 +28,7 @@ class AppTextField extends ConsumerWidget {
     required this.func,
     required this.isPasswordField,
     this.obscureTextProvider,
+    this.controller,
   });
 
   @override
@@ -64,6 +66,7 @@ class AppTextField extends ConsumerWidget {
                   alignment: Alignment.center,
                   child: TextField(
                     maxLength: maxLength,
+                    controller: controller,
                     cursorColor: Theme.of(context).hintColor,
                     onChanged: (value) {
                       if (func != null) {

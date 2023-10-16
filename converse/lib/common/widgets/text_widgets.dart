@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:text_scroll/text_scroll.dart';
 
 Widget text25Bold({
   required BuildContext context,
@@ -128,5 +129,22 @@ Widget text20Medium({
       fontSize: 20,
       color: Theme.of(context).textTheme.bodySmall!.color,
     ),
+  );
+}
+
+Widget textScroll17Regular({
+  required BuildContext context,
+  required String text,
+}) {
+  return TextScroll(
+    text,
+    style: TextStyle(
+      fontFamily: 'custom_regular',
+      fontSize: 17,
+      color: Theme.of(context).textTheme.bodySmall!.color,
+    ),
+    mode: TextScrollMode.bouncing,
+    velocity: const Velocity(pixelsPerSecond: Offset(20, 0)),
+    pauseBetween: const Duration(milliseconds: 2000),
   );
 }

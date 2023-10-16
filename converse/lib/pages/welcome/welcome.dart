@@ -51,7 +51,7 @@ class Welcome extends ConsumerWidget {
                 imagePath: "assets/images/svgs/welcome/odyssey.svg",
                 title: "Begin Your Exciting Odyssey!",
                 subTitle:
-                    "Embark on a journey through vibrant communities. Engage in dialogues and form connections that span the cosmos.",
+                    "Embark on a journey through vibrant conclaves. Engage in dialogues and form connections that span the cosmos.",
                 index: 1,
                 context: context,
               ),
@@ -60,7 +60,7 @@ class Welcome extends ConsumerWidget {
                 imagePath: "assets/images/svgs/welcome/expedition.svg",
                 title: "Tailor Your Personal Expedition",
                 subTitle:
-                    "Express your passions, align with like-minded communities, and carve out your unique path.",
+                    "Express your passions, align with like-minded conclaves, and carve out your unique path.",
                 index: 2,
                 context: context,
               ),

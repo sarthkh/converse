@@ -1,28 +1,33 @@
+import 'package:converse/common/widgets/error_text.dart';
+import 'package:converse/common/widgets/list_tile.dart';
+import 'package:converse/common/widgets/loader.dart';
+import 'package:converse/pages/conclave/controller/conclave_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:go_router/go_router.dart';
 import 'package:converse/common/widgets/text_widgets.dart';
 
-class CommunityListDrawerContent extends StatelessWidget {
-  const CommunityListDrawerContent({super.key});
+class ConclaveListDrawerContent extends ConsumerWidget {
+  const ConclaveListDrawerContent({super.key});
 
-  void navigateToCreateCommunity(BuildContext context) {
-    GoRouter.of(context).pushNamed('create-conclave');
+  void navigateToCraftConclave(BuildContext context) {
+    GoRouter.of(context).pushNamed('craft-conclave');
     ZoomDrawer.of(context)?.close();
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.fromLTRB(20, 20, 0, 20),
-              child: ListTile(
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(20, 20, 0, 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              listTile(
                 title: text20Medium(
                   context: context,
                   text: "Craft a Conclave",
@@ -34,7 +39,7 @@ class CommunityListDrawerContent extends StatelessWidget {
                     BlendMode.srcIn,
                   ),
                 ),
-                onTap: () => navigateToCreateCommunity(context),
+                onTap: () => navigateToCraftConclave(context),
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
                     width: 0.35,
@@ -43,8 +48,41 @@ class CommunityListDrawerContent extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                 ),
               ),
-            ),
-          ],
+              const SizedBox(height: 20),
+              ref.watch(userConclavesProvider).when(
+                    data: (conclaves) => Expanded(
+                      child: ListView.builder(
+                        itemCount: conclaves.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          final conclave = conclaves[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 5),
+                            child: listTile(
+                              leading: CircleAvatar(
+                                backgroundImage:
+                                    NetworkImage(conclave.displayPic),
+                              ),
+                              title: textScroll17Regular(
+                                context: context,
+                                text: "c/${conclave.name}",
+                              ),
+                              onTap: () {},
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              tileColor:
+                                  Theme.of(context).cardColor.withOpacity(0.35),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    error: (error, stackTrace) =>
+                        ErrorText(error: error.toString()),
+                    loading: () => const Loader(),
+                  ),
+            ],
+          ),
         ),
       ),
     );

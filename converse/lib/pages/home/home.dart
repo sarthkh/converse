@@ -16,7 +16,7 @@ class Home extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider)!;
 
-    return CommunityListDrawer(
+    return ConclaveListDrawer(
       mainScreen: Scaffold(
         appBar: buildAppbar(
           context: context,
@@ -64,7 +64,7 @@ class Home extends ConsumerWidget {
           }),
         ),
       ),
-      menuScreen: const CommunityListDrawerContent(),
+      menuScreen: const ConclaveListDrawerContent(),
     );
   }
 }
