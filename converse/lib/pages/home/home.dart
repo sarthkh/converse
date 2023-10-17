@@ -1,6 +1,7 @@
 import 'package:converse/auth/controller/auth_controller.dart';
 import 'package:converse/common/widgets/app_bar.dart';
 import 'package:converse/common/widgets/button_widgets.dart';
+import 'package:converse/common/widgets/cached_image.dart';
 import 'package:converse/common/widgets/text_widgets.dart';
 import 'package:converse/pages/home/drawers/conclave_list_drawer.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,9 @@ class Home extends ConsumerWidget {
             iconButton(
               onPressed: () {},
               icon: CircleAvatar(
-                backgroundImage: NetworkImage(user.avatar),
+                backgroundImage: cachedNetworkImageProvider(
+                  url: user.avatar,
+                ),
                 radius: 15,
               ),
               padding: const EdgeInsets.only(left: 5, right: 15),

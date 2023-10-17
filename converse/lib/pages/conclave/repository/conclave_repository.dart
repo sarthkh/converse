@@ -44,7 +44,7 @@ class ConclaveRepository {
     }
   }
 
-  // get stream of user conclaves by querying conclave
+  // get stream of user conclaves
   Stream<List<Conclave>> getUserConclaves(String uid) {
     return _conclaves
         .where('conversers', arrayContains: uid)
@@ -58,10 +58,26 @@ class ConclaveRepository {
     });
   }
 
+  // get stream of conclave name
   Stream<Conclave> getConclaveByName(String name) {
     return _conclaves
         .doc(name)
         .snapshots()
         .map((event) => Conclave.fromMap(event.data() as Map<String, dynamic>));
+  }
+
+  // to update conclave document
+  FutureVoid editConclave(Conclave conclave) async {
+    try {
+      return right(
+        _conclaves.doc(conclave.name).update(conclave.toMap()),
+      );
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(
+        Failure(e.toString()),
+      );
+    }
   }
 }

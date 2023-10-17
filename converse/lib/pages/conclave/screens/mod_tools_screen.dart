@@ -55,7 +55,7 @@ class ModToolsScreen extends StatelessWidget {
             const SizedBox(height: 25),
             listTile(
               title: text17SemiBoldItalic(
-                  context: context, text: "Edit Community"),
+                  context: context, text: "Edit Conclave Profile"),
               leading: SvgPicture.asset(
                 "assets/images/svgs/conclave/edit.svg",
                 colorFilter: ColorFilter.mode(

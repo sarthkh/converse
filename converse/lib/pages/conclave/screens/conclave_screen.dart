@@ -1,11 +1,14 @@
 import 'package:converse/auth/controller/auth_controller.dart';
+import 'package:converse/common/widgets/app_shimmer.dart';
 import 'package:converse/common/widgets/button_widgets.dart';
+import 'package:converse/common/widgets/cached_image.dart';
 import 'package:converse/common/widgets/error_text.dart';
 import 'package:converse/common/widgets/loader.dart';
 import 'package:converse/common/widgets/text_widgets.dart';
 import 'package:converse/pages/conclave/controller/conclave_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class ConclaveScreen extends ConsumerWidget {
@@ -36,9 +39,22 @@ class ConclaveScreen extends ConsumerWidget {
                     flexibleSpace: Stack(
                       children: [
                         Positioned.fill(
-                          child: Image.network(
-                            conclave.banner,
+                          child: cachedNetworkImage(
+                            imageUrl: conclave.banner,
                             fit: BoxFit.cover,
+                            placeholder: (context, url) => shimmer(
+                              context: context,
+                              width: double.infinity,
+                              height: double.infinity,
+                            ),
+                            errorWidget: (context, url, error) =>
+                                SvgPicture.asset(
+                              "assets/images/svgs/register/alert.svg",
+                              colorFilter: ColorFilter.mode(
+                                Theme.of(context).primaryColor,
+                                BlendMode.srcIn,
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -52,8 +68,9 @@ class ConclaveScreen extends ConsumerWidget {
                           Align(
                             alignment: Alignment.topLeft,
                             child: CircleAvatar(
-                              backgroundImage:
-                                  NetworkImage(conclave.displayPic),
+                              backgroundImage: cachedNetworkImageProvider(
+                                url: conclave.displayPic,
+                              ),
                               radius: 35,
                             ),
                           ),
@@ -71,7 +88,8 @@ class ConclaveScreen extends ConsumerWidget {
                               conclave.moderators.contains(user.uid)
                                   ? outlinedButton(
                                       context: context,
-                                      onPressed: () => navigateToModToolsScreen(context),
+                                      onPressed: () =>
+                                          navigateToModToolsScreen(context),
                                       child: text17SemiBoldItalic(
                                         context: context,
                                         text: "Mod Tools",

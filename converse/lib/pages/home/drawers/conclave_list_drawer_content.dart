@@ -1,3 +1,4 @@
+import 'package:converse/common/widgets/cached_image.dart';
 import 'package:converse/common/widgets/error_text.dart';
 import 'package:converse/common/widgets/list_tile.dart';
 import 'package:converse/common/widgets/loader.dart';
@@ -65,8 +66,9 @@ class ConclaveListDrawerContent extends ConsumerWidget {
                             padding: const EdgeInsets.only(bottom: 5),
                             child: listTile(
                               leading: CircleAvatar(
-                                backgroundImage:
-                                    NetworkImage(conclave.displayPic),
+                                backgroundImage: cachedNetworkImageProvider(
+                                  url: conclave.displayPic,
+                                ),
                               ),
                               title: textScroll17Regular(
                                 context: context,
