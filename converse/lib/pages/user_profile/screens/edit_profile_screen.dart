@@ -1,4 +1,6 @@
+import 'package:converse/auth/controller/auth_controller.dart';
 import 'package:converse/common/widgets/app_bar.dart';
+import 'package:converse/common/widgets/app_textfield.dart';
 import 'package:converse/common/widgets/button_widgets.dart';
 import 'package:converse/common/widgets/error_text.dart';
 import 'package:converse/common/widgets/image_widgets.dart';
@@ -6,28 +8,42 @@ import 'package:converse/common/widgets/loader.dart';
 import 'package:converse/common/widgets/text_widgets.dart';
 import 'package:converse/constants/constants.dart';
 import 'package:converse/core/utils.dart';
-import 'package:converse/pages/conclave/controller/conclave_controller.dart';
+import 'package:converse/pages/user_profile/controller/user_profile_controller.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:io';
-import 'package:converse/models/conclave_model.dart';
 
-class EditConclaveScreen extends ConsumerStatefulWidget {
-  final String name;
+class EditProfileScreen extends ConsumerStatefulWidget {
+  final String uId;
 
-  const EditConclaveScreen({
+  const EditProfileScreen({
     super.key,
-    required this.name,
+    required this.uId,
   });
 
   @override
-  ConsumerState createState() => _EditConclaveScreenState();
+  ConsumerState createState() => _EditProfileScreenState();
 }
 
-class _EditConclaveScreenState extends ConsumerState<EditConclaveScreen> {
-  File? bannerFile, displayPicFile;
+class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
+  File? bannerFile, avatarFile;
+  late TextEditingController nameController;
+
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController(
+      text: ref.read(userProvider)!.name,
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    nameController.dispose();
+  }
 
   void selectBannerImage() async {
     final res = await pickImage();
@@ -39,37 +55,37 @@ class _EditConclaveScreenState extends ConsumerState<EditConclaveScreen> {
     }
   }
 
-  void selectDisplayPicImage() async {
+  void selectAvatarImage() async {
     final res = await pickImage();
 
     if (res != null) {
       setState(() {
-        displayPicFile = File(res.files.first.path!);
+        avatarFile = File(res.files.first.path!);
       });
     }
   }
 
-  void save(Conclave conclave) {
-    ref.read(conclaveControllerProvider.notifier).editConclave(
+  void save() {
+    ref.read(userProfileControllerProvider.notifier).editUserProfile(
           context: context,
-          conclave: conclave,
+          avatarFile: avatarFile,
           bannerFile: bannerFile,
-          displayPicFile: displayPicFile,
+          name: nameController.text.trim(),
         );
   }
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = ref.watch(conclaveControllerProvider);
+    final isLoading = ref.watch(userProfileControllerProvider);
 
-    return ref.watch(getConclaveByNameProvider(widget.name)).when(
-          data: (conclave) => Scaffold(
+    return ref.watch(getUserDataProvider(widget.uId)).when(
+          data: (user) => Scaffold(
             appBar: buildAppbar(
               context: context,
               bottom: true,
               actions: [
                 textButton(
-                  onPressed: () => save(conclave),
+                  onPressed: save,
                   child: SvgPicture.asset(
                     "assets/images/svgs/conclave/save.svg",
                     colorFilter: ColorFilter.mode(
@@ -81,7 +97,7 @@ class _EditConclaveScreenState extends ConsumerState<EditConclaveScreen> {
               ],
               title: text22SemiBold(
                 context: context,
-                text: "Edit Conclave",
+                text: "Edit Profile",
               ),
             ),
             body: Stack(
@@ -110,8 +126,8 @@ class _EditConclaveScreenState extends ConsumerState<EditConclaveScreen> {
                                   ),
                                   child: bannerFile != null
                                       ? Image.file(bannerFile!)
-                                      : conclave.banner.isEmpty ||
-                                              conclave.banner ==
+                                      : user.banner.isEmpty ||
+                                              user.banner ==
                                                   Constants.bannerDefault
                                           ? Center(
                                               child: SvgPicture.asset(
@@ -123,7 +139,7 @@ class _EditConclaveScreenState extends ConsumerState<EditConclaveScreen> {
                                                 height: 45,
                                               ),
                                             )
-                                          : Image.network(conclave.banner),
+                                          : Image.network(user.banner),
                                 ),
                               ),
                             ),
@@ -131,22 +147,27 @@ class _EditConclaveScreenState extends ConsumerState<EditConclaveScreen> {
                               bottom: 12.5,
                               left: 20,
                               child: GestureDetector(
-                                onTap: selectDisplayPicImage,
-                                child: displayPicFile != null
+                                onTap: selectAvatarImage,
+                                child: avatarFile != null
                                     ? circleAvatar(
-                                        backgroundImage:
-                                            FileImage(displayPicFile!),
+                                        backgroundImage: FileImage(avatarFile!),
                                         radius: 35,
                                       )
                                     : circleAvatar(
                                         backgroundImage:
-                                            NetworkImage(conclave.displayPic),
+                                            NetworkImage(user.avatar),
                                         radius: 35,
                                       ),
                               ),
                             ),
                           ],
                         ),
+                      ),
+                      const SizedBox(height: 25),
+                      textField(
+                        context: context,
+                        controller: nameController,
+                        hintText: "Name",
                       ),
                     ],
                   ),

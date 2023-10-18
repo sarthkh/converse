@@ -15,3 +15,15 @@ Widget listTile({
     tileColor: tileColor,
   );
 }
+
+Widget checkBoxListTile({
+  required Widget title,
+  required bool value,
+  required Function(bool?) onChanged,
+}) {
+  return CheckboxListTile(
+    title: title,
+    value: value,
+    onChanged: onChanged,
+  );
+}

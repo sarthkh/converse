@@ -191,3 +191,62 @@ Widget text17SemiBoldItalic({
     ),
   );
 }
+
+Widget text17SemiBold({
+  required BuildContext context,
+  required String text,
+  TextOverflow? overflow,
+}) {
+  return Text(
+    text,
+    style: TextStyle(
+      fontFamily: 'custom_bold',
+      fontSize: 17,
+      letterSpacing: 1.25,
+      color: Theme.of(context).textTheme.bodySmall!.color,
+    ),
+    overflow: overflow,
+  );
+}
+
+Widget text17Bold({
+  required BuildContext context,
+  required String text,
+}) {
+  return Text(
+    text,
+    style: TextStyle(
+      fontFamily: 'custom_bold',
+      fontSize: 17,
+      color: Theme.of(context).textTheme.bodyLarge!.color,
+    ),
+  );
+}
+
+Widget text14Medium({
+  required BuildContext context,
+  required String text,
+}) {
+  return Text(
+    text,
+    style: TextStyle(
+      fontFamily: 'custom_medium',
+      fontSize: 14,
+      color: Theme.of(context).textTheme.bodyLarge!.color,
+    ),
+  );
+}
+
+Widget text20Bold({
+  required BuildContext context,
+  required String text,
+}) {
+  return Text(
+    text,
+    style: TextStyle(
+      fontFamily: 'custom_bold',
+      fontSize: 20,
+      color: Theme.of(context).textTheme.bodyLarge!.color,
+    ),
+  );
+}

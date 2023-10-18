@@ -134,3 +134,30 @@ class AppTextField extends ConsumerWidget {
     );
   }
 }
+
+Widget textField({
+  required BuildContext context,
+  required TextEditingController controller,
+  required String hintText,
+  int? maxLines,
+  int? maxLength
+}) {
+  return TextField(
+    controller: controller,
+    decoration: InputDecoration(
+      filled: true,
+      hintText: hintText,
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Theme.of(context).primaryColor,
+        ),
+        borderRadius: BorderRadius.circular(7.75),
+      ),
+      border: InputBorder.none,
+      contentPadding: const EdgeInsets.all(17.5),
+    ),
+    style: text18MediumStyle(context),
+    maxLines: maxLines,
+    maxLength: maxLength,
+  );
+}

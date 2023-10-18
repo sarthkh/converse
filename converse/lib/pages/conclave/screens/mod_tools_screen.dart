@@ -17,6 +17,10 @@ class ModToolsScreen extends StatelessWidget {
     GoRouter.of(context).push('/edit-conclave/$name');
   }
 
+  void navigateToAddModsScreen(BuildContext context) {
+    GoRouter.of(context).push('/add-mods/$name');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +47,7 @@ class ModToolsScreen extends StatelessWidget {
                   BlendMode.srcIn,
                 ),
               ),
-              onTap: () {},
+              onTap: () => navigateToAddModsScreen(context),
               shape: RoundedRectangleBorder(
                 side: BorderSide(
                   width: 0.35,

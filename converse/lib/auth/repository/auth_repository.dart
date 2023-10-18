@@ -92,4 +92,9 @@ class AuthRepository {
       );
     }
   }
+
+  void logout() async {
+    _googleSignIn.signOut();
+    await _firebaseAuth.signOut();
+  }
 }

@@ -6,9 +6,11 @@ import 'package:converse/models/conclave_model.dart';
 import 'package:converse/pages/conclave/repository/conclave_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:io';
 import 'package:converse/providers/storage_repository_provider.dart';
+import 'package:converse/core/failure.dart';
 
 final conclaveControllerProvider =
     StateNotifierProvider<ConclaveController, bool>((ref) {
@@ -28,6 +30,10 @@ final userConclavesProvider = StreamProvider((ref) {
 
 final getConclaveByNameProvider = StreamProvider.family((ref, String name) {
   return ref.watch(conclaveControllerProvider.notifier).getConclaveByName(name);
+});
+
+final searchConclaveProvider = StreamProvider.family((ref, String query) {
+  return ref.watch(conclaveControllerProvider.notifier).searchConclave(query);
 });
 
 class ConclaveController extends StateNotifier<bool> {
@@ -84,6 +90,40 @@ class ConclaveController extends StateNotifier<bool> {
     return _conclaveRepository.getConclaveByName(name);
   }
 
+  void joinConclave(BuildContext context, Conclave conclave) async {
+    final user = _ref.read(userProvider)!;
+    Either<Failure, void> res;
+
+    if (conclave.conversers.contains(user.uid)) {
+      res = await _conclaveRepository.leaveConclave(conclave.name, user.uid);
+    } else {
+      res = await _conclaveRepository.joinConclave(conclave.name, user.uid);
+    }
+
+    res.fold(
+      (l) => toastInfo(
+        context: context,
+        msg: l.message,
+        type: ToastType.fail,
+      ),
+      (r) {
+        if (conclave.conversers.contains(user.uid)) {
+          toastInfo(
+            context: context,
+            msg: "Left successfully",
+            type: ToastType.pass,
+          );
+        } else {
+          toastInfo(
+            context: context,
+            msg: "Joined successfully",
+            type: ToastType.pass,
+          );
+        }
+      },
+    );
+  }
+
   void editConclave({
     required BuildContext context,
     required Conclave conclave,
@@ -102,7 +142,7 @@ class ConclaveController extends StateNotifier<bool> {
       final compressedDisplayPic = resultDisplayPic['file'] as File;
       final dir = resultDisplayPic['dir'] as Directory;
 
-      // conclave/displayPic/sarthak
+      // conclaves/displayPic/sarthak
       final res = await _storageRepository.storeFile(
         path: 'conclaves/displayPic',
         id: conclave.name,
@@ -141,7 +181,7 @@ class ConclaveController extends StateNotifier<bool> {
       final compressedBanner = resultBanner['file'] as File;
       final dir = resultBanner['dir'] as Directory;
 
-      // conclave/banner/sarthak
+      // conclaves/banner/sarthak
       final res = await _storageRepository.storeFile(
         path: 'conclaves/banner',
         id: conclave.name,
@@ -173,6 +213,27 @@ class ConclaveController extends StateNotifier<bool> {
     final res = await _conclaveRepository.editConclave(conclave);
 
     state = false; // stop loading
+
+    res.fold(
+      (l) => toastInfo(
+        context: context,
+        msg: l.message,
+        type: ToastType.fail,
+      ),
+      (r) => GoRouter.of(context).pop(),
+    );
+  }
+
+  Stream<List<Conclave>> searchConclave(String query) {
+    return _conclaveRepository.searchConclave(query);
+  }
+
+  void addMods(
+    String conclaveName,
+    List<String> uIds,
+    BuildContext context,
+  ) async {
+    final res = await _conclaveRepository.addMods(conclaveName, uIds);
 
     res.fold(
       (l) => toastInfo(

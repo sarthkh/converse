@@ -2,19 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
-class ConclaveListDrawer extends ConsumerWidget {
+class CustomDrawer extends ConsumerWidget {
   final Widget menuScreen;
   final Widget mainScreen;
+  final ZoomDrawerController? controller;
+  final bool isRtl;
 
-  const ConclaveListDrawer({
+  const CustomDrawer({
     super.key,
     required this.menuScreen,
     required this.mainScreen,
+    required this.isRtl,
+    required this.controller,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ZoomDrawer(
+      controller: controller,
       menuScreen: menuScreen,
       mainScreen: mainScreen,
       borderRadius: 25,
@@ -29,6 +34,7 @@ class ConclaveListDrawer extends ConsumerWidget {
       drawerShadowsBackgroundColor: Theme.of(context).cardColor,
       slideWidth: MediaQuery.of(context).size.width * 0.75,
       menuBackgroundColor: Theme.of(context).colorScheme.surface,
+      isRtl: isRtl,
     );
   }
 }

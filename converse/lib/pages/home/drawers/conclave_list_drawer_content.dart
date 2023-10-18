@@ -1,5 +1,6 @@
 import 'package:converse/common/widgets/cached_image.dart';
 import 'package:converse/common/widgets/error_text.dart';
+import 'package:converse/common/widgets/image_widgets.dart';
 import 'package:converse/common/widgets/list_tile.dart';
 import 'package:converse/common/widgets/loader.dart';
 import 'package:converse/pages/conclave/controller/conclave_controller.dart';
@@ -29,7 +30,7 @@ class ConclaveListDrawerContent extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
-        child: Container(
+        child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 20, 0, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -65,7 +66,7 @@ class ConclaveListDrawerContent extends ConsumerWidget {
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 5),
                             child: listTile(
-                              leading: CircleAvatar(
+                              leading: circleAvatar(
                                 backgroundImage: cachedNetworkImageProvider(
                                   url: conclave.displayPic,
                                 ),

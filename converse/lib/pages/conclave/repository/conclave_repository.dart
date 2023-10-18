@@ -44,6 +44,38 @@ class ConclaveRepository {
     }
   }
 
+  FutureVoid joinConclave(String conclaveName, String userId) async {
+    try {
+      return right(
+        _conclaves.doc(conclaveName).update({
+          'conversers': FieldValue.arrayUnion([userId]),
+        }),
+      );
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(
+        Failure(e.toString()),
+      );
+    }
+  }
+
+  FutureVoid leaveConclave(String conclaveName, String userId) async {
+    try {
+      return right(
+        _conclaves.doc(conclaveName).update({
+          'conversers': FieldValue.arrayRemove([userId]),
+        }),
+      );
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(
+        Failure(e.toString()),
+      );
+    }
+  }
+
   // get stream of user conclaves
   Stream<List<Conclave>> getUserConclaves(String uid) {
     return _conclaves
@@ -71,6 +103,53 @@ class ConclaveRepository {
     try {
       return right(
         _conclaves.doc(conclave.name).update(conclave.toMap()),
+      );
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(
+        Failure(e.toString()),
+      );
+    }
+  }
+
+  // search for conclaves by string
+  Stream<List<Conclave>> searchConclave(String query) {
+    return _conclaves
+        .where(
+          'name',
+          isGreaterThanOrEqualTo: query.isEmpty ? 0 : query,
+          isLessThan: query.isEmpty
+              ? null
+              : query.substring(0, query.length - 1) +
+                  String.fromCharCode(
+                    query.codeUnitAt(query.length - 1) + 1,
+                  ),
+        )
+        .snapshots()
+        .map(
+      (event) {
+        List<Conclave> conclaves = [];
+        for (var conclave in event.docs) {
+          conclaves.add(
+            Conclave.fromMap(
+              conclave.data() as Map<String, dynamic>,
+            ),
+          );
+        }
+        return conclaves;
+      },
+    );
+  }
+
+  FutureVoid addMods(String conclaveName, List<String> uIds) async {
+    try {
+      return right(
+        _conclaves.doc(conclaveName).update(
+          {
+            'moderators': uIds,
+          },
+        ),
       );
     } on FirebaseException catch (e) {
       throw e.message!;

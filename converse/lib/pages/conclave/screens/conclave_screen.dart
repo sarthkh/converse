@@ -3,6 +3,7 @@ import 'package:converse/common/widgets/app_shimmer.dart';
 import 'package:converse/common/widgets/button_widgets.dart';
 import 'package:converse/common/widgets/cached_image.dart';
 import 'package:converse/common/widgets/error_text.dart';
+import 'package:converse/common/widgets/image_widgets.dart';
 import 'package:converse/common/widgets/loader.dart';
 import 'package:converse/common/widgets/text_widgets.dart';
 import 'package:converse/pages/conclave/controller/conclave_controller.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:converse/models/conclave_model.dart';
 
 class ConclaveScreen extends ConsumerWidget {
   final String name;
@@ -21,6 +23,12 @@ class ConclaveScreen extends ConsumerWidget {
 
   void navigateToModToolsScreen(BuildContext context) {
     GoRouter.of(context).push('/mod-tools/$name');
+  }
+
+  void joinConclave(WidgetRef ref, BuildContext context, Conclave conclave) {
+    ref
+        .read(conclaveControllerProvider.notifier)
+        .joinConclave(context, conclave);
   }
 
   @override
@@ -67,7 +75,7 @@ class ConclaveScreen extends ConsumerWidget {
                         [
                           Align(
                             alignment: Alignment.topLeft,
-                            child: CircleAvatar(
+                            child: circleAvatar(
                               backgroundImage: cachedNetworkImageProvider(
                                 url: conclave.displayPic,
                               ),
@@ -97,7 +105,8 @@ class ConclaveScreen extends ConsumerWidget {
                                     )
                                   : outlinedButton(
                                       context: context,
-                                      onPressed: () {},
+                                      onPressed: () =>
+                                          joinConclave(ref, context, conclave),
                                       child: text17SemiBoldItalic(
                                         context: context,
                                         text: conclave.conversers
@@ -130,7 +139,7 @@ class ConclaveScreen extends ConsumerWidget {
                                   context: context,
                                   text: conclave.moderators.length == 1
                                       ? "${conclave.moderators.length} Moderator"
-                                      : "${conclave.moderators.length} Moderator",
+                                      : "${conclave.moderators.length} Moderators",
                                 ),
                               ],
                             ),

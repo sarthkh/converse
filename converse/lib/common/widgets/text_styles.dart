@@ -16,3 +16,11 @@ TextStyle toastStyle(BuildContext context) {
     color: Palette.lightWhite,
   );
 }
+
+TextStyle text20MediumStyle(BuildContext context) {
+  return TextStyle(
+    fontFamily: 'custom_medium',
+    fontSize: 20,
+    color: Theme.of(context).textTheme.bodyMedium!.color,
+  );
+}
