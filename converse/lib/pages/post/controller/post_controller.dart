@@ -109,7 +109,7 @@ class PostController extends StateNotifier<bool> {
       commentCount: 0,
       username: user.name,
       uid: user.uid,
-      type: 'Text',
+      type: 'Link',
       createdAt: DateTime.now(),
       awards: [],
       link: link,

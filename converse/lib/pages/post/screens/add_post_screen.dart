@@ -30,7 +30,7 @@ class AddPostScreen extends ConsumerWidget {
             child: SvgPicture.asset(
               "assets/images/svgs/home/image.svg",
               colorFilter: ColorFilter.mode(
-                Theme.of(context).hintColor,
+                Theme.of(context).canvasColor,
                 BlendMode.srcIn,
               ),
               height: iconSize,
@@ -42,9 +42,9 @@ class AddPostScreen extends ConsumerWidget {
             height: cardHeightWidth,
             width: cardHeightWidth,
             child: SvgPicture.asset(
-              "assets/images/svgs/home/comment.svg",
+              "assets/images/svgs/home/text.svg",
               colorFilter: ColorFilter.mode(
-                Theme.of(context).hintColor,
+                Theme.of(context).canvasColor,
                 BlendMode.srcIn,
               ),
               height: iconSize,
@@ -58,7 +58,7 @@ class AddPostScreen extends ConsumerWidget {
             child: SvgPicture.asset(
               "assets/images/svgs/home/link.svg",
               colorFilter: ColorFilter.mode(
-                Theme.of(context).hintColor,
+                Theme.of(context).canvasColor,
                 BlendMode.srcIn,
               ),
               height: iconSize,

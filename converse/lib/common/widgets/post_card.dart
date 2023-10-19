@@ -40,8 +40,12 @@ class PostCard extends ConsumerWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-              color: Theme.of(context).drawerTheme.backgroundColor),
-          padding: const EdgeInsets.symmetric(vertical: 10),
+            color: Theme.of(context)
+                .drawerTheme
+                .backgroundColor
+                ?.withOpacity(0.35),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: Row(
             children: [
               Expanded(
@@ -71,13 +75,14 @@ class PostCard extends ConsumerWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        text17Bold(
+                                        text16Bold(
                                           context: context,
                                           text: "c/${post.conclaveName}",
                                         ),
+                                        const SizedBox(width: 4),
                                         text14Medium(
                                           context: context,
-                                          text: "c/${post.username}",
+                                          text: "u/${post.username}",
                                         ),
                                       ],
                                     ),
@@ -85,20 +90,24 @@ class PostCard extends ConsumerWidget {
                                 ],
                               ),
                               if (post.uid == user.uid)
-                                iconButton(
-                                  onPressed: () => deletePost(context, ref),
-                                  icon: SvgPicture.asset(
-                                    "assets/images/svgs/home/delete.svg",
-                                    colorFilter: ColorFilter.mode(
-                                      Theme.of(context).primaryColor,
-                                      BlendMode.srcIn,
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 4),
+                                  child: iconButton(
+                                    onPressed: () => deletePost(context, ref),
+                                    icon: SvgPicture.asset(
+                                      "assets/images/svgs/home/delete.svg",
+                                      colorFilter: ColorFilter.mode(
+                                        Theme.of(context).primaryColor,
+                                        BlendMode.srcIn,
+                                      ),
                                     ),
                                   ),
                                 ),
                             ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            padding: const EdgeInsets.symmetric(vertical: 8)
+                                .copyWith(right: 10),
                             child: text20Bold(
                               context: context,
                               text: post.title,
@@ -106,17 +115,19 @@ class PostCard extends ConsumerWidget {
                           ),
                           if (isTypeImage)
                             Container(
-                              padding: const EdgeInsets.only(right: 16),
-                              height: MediaQuery.of(context).size.height * 0.35,
-                              width: double.infinity,
-                              child: Image.network(
-                                post.link!,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                                padding: const EdgeInsets.symmetric(vertical: 8)
+                                    .copyWith(right: 16),
+                                height:
+                                    MediaQuery.of(context).size.height * 0.35,
+                                width: double.infinity,
+                                child: Image.network(
+                                  post.link!,
+                                  fit: BoxFit.cover,
+                                )),
                           if (isTypeLink)
                             Padding(
-                              padding: const EdgeInsets.only(right: 16),
+                              padding: const EdgeInsets.symmetric(vertical: 8)
+                                  .copyWith(right: 16),
                               child: AnyLinkPreview(
                                 displayDirection:
                                     UIDirection.uiDirectionHorizontal,
@@ -126,28 +137,36 @@ class PostCard extends ConsumerWidget {
                           if (isTypeText)
                             Container(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 15),
+                                  const EdgeInsets.only(right: 10, bottom: 16),
                               alignment: Alignment.bottomLeft,
-                              child: text15Regular(
-                                  context: context,
-                                  text: post.description!,
-                                  color: Theme.of(context).cardColor),
+                              child: text16Medium(
+                                context: context,
+                                text: post.description!,
+                              ),
                             ),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Row(
                                 children: [
                                   iconButton(
                                     onPressed: () => upvotePost(ref),
-                                    icon: SvgPicture.asset(
-                                      "assets/images/svgs/home/upvote.svg",
-                                      colorFilter: ColorFilter.mode(
-                                        post.upVotes.contains(user.uid)
-                                            ? Theme.of(context).primaryColor
-                                            : Theme.of(context).hintColor,
-                                        BlendMode.srcIn,
-                                      ),
-                                    ),
+                                    icon: post.upVotes.contains(user.uid)
+                                        ? SvgPicture.asset(
+                                            "assets/images/svgs/home/upvote_filled.svg",
+                                            colorFilter: ColorFilter.mode(
+                                              Theme.of(context).primaryColor,
+                                              BlendMode.srcIn,
+                                            ),
+                                          )
+                                        : SvgPicture.asset(
+                                            "assets/images/svgs/home/upvote.svg",
+                                            colorFilter: ColorFilter.mode(
+                                              Theme.of(context).hintColor,
+                                              BlendMode.srcIn,
+                                            ),
+                                          ),
                                   ),
                                   text16Medium(
                                     context: context,
@@ -156,40 +175,45 @@ class PostCard extends ConsumerWidget {
                                   ),
                                   iconButton(
                                     onPressed: () => downVotePost(ref),
-                                    icon: SvgPicture.asset(
-                                      "assets/images/svgs/home/downvote.svg",
-                                      colorFilter: ColorFilter.mode(
-                                        post.upVotes.contains(user.uid)
-                                            ? Theme.of(context).primaryColor
-                                            : Theme.of(context).hintColor,
-                                        BlendMode.srcIn,
-                                      ),
-                                    ),
+                                    icon: post.downVotes.contains(user.uid)
+                                        ? SvgPicture.asset(
+                                            "assets/images/svgs/home/downvote_filled.svg",
+                                            colorFilter: ColorFilter.mode(
+                                              Theme.of(context).primaryColor,
+                                              BlendMode.srcIn,
+                                            ),
+                                          )
+                                        : SvgPicture.asset(
+                                            "assets/images/svgs/home/downvote.svg",
+                                            colorFilter: ColorFilter.mode(
+                                              Theme.of(context).hintColor,
+                                              BlendMode.srcIn,
+                                            ),
+                                          ),
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Row(
-                                children: [
-                                  iconButton(
-                                    onPressed: () {},
-                                    icon: SvgPicture.asset(
-                                      "assets/images/svgs/home/comment.svg",
-                                      colorFilter: ColorFilter.mode(
-                                        Theme.of(context).hintColor,
-                                        BlendMode.srcIn,
+                              Padding(
+                                padding: const EdgeInsets.only(right: 28),
+                                child: Row(
+                                  children: [
+                                    iconButton(
+                                      onPressed: () {},
+                                      icon: SvgPicture.asset(
+                                        "assets/images/svgs/home/comment.svg",
+                                        colorFilter: ColorFilter.mode(
+                                          Theme.of(context).hintColor,
+                                          BlendMode.srcIn,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  text16Medium(
-                                    context: context,
-                                    text:
-                                        '${post.commentCount == 0 ? 'Comment' : post.upVotes.length - post.downVotes.length}',
-                                  ),
-                                ],
+                                    text16Medium(
+                                      context: context,
+                                      text:
+                                          '${post.commentCount == 0 ? 'Comment' : post.commentCount}',
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),

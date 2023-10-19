@@ -155,10 +155,13 @@ flutter:
     - assets/images/svgs/home/image.svg
     - assets/images/svgs/home/comment.svg
     - assets/images/svgs/home/link.svg
+    - assets/images/svgs/home/text.svg
     - assets/images/svgs/home/send.svg
     - assets/images/svgs/home/delete.svg
     - assets/images/svgs/home/upvote.svg
+    - assets/images/svgs/home/upvote_filled.svg
     - assets/images/svgs/home/downvote.svg
+    - assets/images/svgs/home/downvote_filled.svg
     # conclave
     - assets/images/svgs/conclave/conclave.svg
     - assets/images/svgs/conclave/moderator.svg

@@ -209,7 +209,7 @@ Widget text17SemiBold({
   );
 }
 
-Widget text17Bold({
+Widget text16Bold({
   required BuildContext context,
   required String text,
 }) {
@@ -217,7 +217,7 @@ Widget text17Bold({
     text,
     style: TextStyle(
       fontFamily: 'custom_bold',
-      fontSize: 17,
+      fontSize: 16,
       color: Theme.of(context).textTheme.bodyLarge!.color,
     ),
   );
