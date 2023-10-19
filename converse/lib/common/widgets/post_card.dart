@@ -75,9 +75,11 @@ class PostCard extends ConsumerWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        text16Bold(
-                                          context: context,
-                                          text: "c/${post.conclaveName}",
+                                        FittedBox(
+                                          child: text16Bold(
+                                            context: context,
+                                            text: "c/${post.conclaveName}",
+                                          ),
                                         ),
                                         const SizedBox(width: 4),
                                         text14Medium(
@@ -139,7 +141,7 @@ class PostCard extends ConsumerWidget {
                               padding:
                                   const EdgeInsets.only(right: 10, bottom: 16),
                               alignment: Alignment.bottomLeft,
-                              child: text16Medium(
+                              child: text16SemiBold(
                                 context: context,
                                 text: post.description!,
                               ),
@@ -156,7 +158,7 @@ class PostCard extends ConsumerWidget {
                                         ? SvgPicture.asset(
                                             "assets/images/svgs/home/upvote_filled.svg",
                                             colorFilter: ColorFilter.mode(
-                                              Theme.of(context).primaryColor,
+                                              Theme.of(context).hintColor,
                                               BlendMode.srcIn,
                                             ),
                                           )
@@ -168,7 +170,7 @@ class PostCard extends ConsumerWidget {
                                             ),
                                           ),
                                   ),
-                                  text16Medium(
+                                  text17Medium(
                                     context: context,
                                     text:
                                         '${post.upVotes.length - post.downVotes.length == 0 ? 'Vote' : post.upVotes.length - post.downVotes.length}',
@@ -179,7 +181,7 @@ class PostCard extends ConsumerWidget {
                                         ? SvgPicture.asset(
                                             "assets/images/svgs/home/downvote_filled.svg",
                                             colorFilter: ColorFilter.mode(
-                                              Theme.of(context).primaryColor,
+                                              Theme.of(context).hintColor,
                                               BlendMode.srcIn,
                                             ),
                                           )
@@ -207,7 +209,7 @@ class PostCard extends ConsumerWidget {
                                         ),
                                       ),
                                     ),
-                                    text16Medium(
+                                    text17Medium(
                                       context: context,
                                       text:
                                           '${post.commentCount == 0 ? 'Comment' : post.commentCount}',

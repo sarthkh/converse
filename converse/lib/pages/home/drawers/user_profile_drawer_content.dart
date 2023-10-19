@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:url_launcher/link.dart';
 
 class UserProfileDrawerContent extends ConsumerWidget {
   const UserProfileDrawerContent({super.key});
@@ -59,7 +60,7 @@ class UserProfileDrawerContent extends ConsumerWidget {
                 leading: SvgPicture.asset(
                   "assets/images/svgs/home/person.svg",
                   colorFilter: ColorFilter.mode(
-                    Theme.of(context).canvasColor,
+                    Theme.of(context).hintColor,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -70,7 +71,7 @@ class UserProfileDrawerContent extends ConsumerWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
-                tileColor: Theme.of(context).primaryColor.withOpacity(0.35),
+                tileColor: Theme.of(context).cardColor,
               ),
               const SizedBox(height: 25),
               listTile(
@@ -81,7 +82,7 @@ class UserProfileDrawerContent extends ConsumerWidget {
                 leading: SvgPicture.asset(
                   "assets/images/svgs/home/logout.svg",
                   colorFilter: ColorFilter.mode(
-                    Theme.of(context).canvasColor,
+                    Theme.of(context).hintColor,
                     BlendMode.srcIn,
                   ),
                 ),
@@ -89,15 +90,27 @@ class UserProfileDrawerContent extends ConsumerWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
-                tileColor: Theme.of(context).primaryColor.withOpacity(0.35),
+                tileColor: Theme.of(context).cardColor,
               ),
               const SizedBox(height: 50),
               const ThemeSwitcher(),
               const SizedBox(height: 50),
               text20SemiBold(
                 context: context,
-                text: "Made with ❤️",
-              )
+                text: "Made with ❤️ by",
+              ),
+              const SizedBox(height: 10),
+              Link(
+                uri: Uri.parse("https://github.com/sarthakz25"),
+                builder: (context, followLink) => GestureDetector(
+                  onTap: followLink,
+                  child: text20Heavy(
+                    context: context,
+                    text: "... .- .-. - .... .- -.-",
+                  ),
+                ),
+                target: LinkTarget.self,
+              ),
             ],
           ),
         ),

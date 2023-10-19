@@ -36,130 +36,132 @@ class ConclaveScreen extends ConsumerWidget {
     final user = ref.watch(userProvider)!;
 
     return Scaffold(
-      body: ref.watch(getConclaveByNameProvider(name)).when(
-            data: (conclave) => NestedScrollView(
-              headerSliverBuilder: (context, innerBoxIsScrolled) {
-                return [
-                  SliverAppBar(
-                    expandedHeight: 150,
-                    floating: true,
-                    snap: true,
-                    flexibleSpace: Stack(
-                      children: [
-                        Positioned.fill(
-                          child: cachedNetworkImage(
-                            imageUrl: conclave.banner,
-                            fit: BoxFit.cover,
-                            placeholder: (context, url) => shimmer(
-                              context: context,
-                              width: double.infinity,
-                              height: double.infinity,
-                            ),
-                            errorWidget: (context, url, error) =>
-                                SvgPicture.asset(
-                              "assets/images/svgs/register/alert.svg",
-                              colorFilter: ColorFilter.mode(
-                                Theme.of(context).primaryColor,
-                                BlendMode.srcIn,
+      body: SafeArea(
+        child: ref.watch(getConclaveByNameProvider(name)).when(
+              data: (conclave) => NestedScrollView(
+                headerSliverBuilder: (context, innerBoxIsScrolled) {
+                  return [
+                    SliverAppBar(
+                      expandedHeight: 150,
+                      floating: true,
+                      snap: true,
+                      flexibleSpace: Stack(
+                        children: [
+                          Positioned.fill(
+                            child: cachedNetworkImage(
+                              imageUrl: conclave.banner,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) => shimmer(
+                                context: context,
+                                width: double.infinity,
+                                height: double.infinity,
                               ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SliverPadding(
-                    padding: const EdgeInsets.all(15),
-                    sliver: SliverList(
-                      delegate: SliverChildListDelegate(
-                        [
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: circleAvatar(
-                              backgroundImage: cachedNetworkImageProvider(
-                                url: conclave.displayPic,
-                              ),
-                              radius: 35,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: text20SemiBold(
-                                  context: context,
-                                  text: "c/${conclave.name}",
+                              errorWidget: (context, url, error) =>
+                                  SvgPicture.asset(
+                                "assets/images/svgs/register/alert.svg",
+                                colorFilter: ColorFilter.mode(
+                                  Theme.of(context).primaryColor,
+                                  BlendMode.srcIn,
                                 ),
                               ),
-                              const SizedBox(width: 10),
-                              conclave.moderators.contains(user.uid)
-                                  ? outlinedButton(
-                                      context: context,
-                                      onPressed: () =>
-                                          navigateToModToolsScreen(context),
-                                      child: text17SemiBoldItalic(
-                                        context: context,
-                                        text: "Mod Tools",
-                                      ),
-                                    )
-                                  : outlinedButton(
-                                      context: context,
-                                      onPressed: () =>
-                                          joinConclave(ref, context, conclave),
-                                      child: text17SemiBoldItalic(
-                                        context: context,
-                                        text: conclave.conversers
-                                                .contains(user.uid)
-                                            ? "Joined"
-                                            : "Join",
-                                      ),
-                                    ),
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10),
-                            child: Row(
-                              children: [
-                                text16Medium(
-                                  context: context,
-                                  text: conclave.conversers.length == 1
-                                      ? "${conclave.conversers.length} Converser"
-                                      : "${conclave.conversers.length} Conversers",
-                                ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 5),
-                                  child: text16Medium(
-                                    context: context,
-                                    text: "·",
-                                  ),
-                                ),
-                                text16Medium(
-                                  context: context,
-                                  text: conclave.moderators.length == 1
-                                      ? "${conclave.moderators.length} Moderator"
-                                      : "${conclave.moderators.length} Moderators",
-                                ),
-                              ],
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                ];
-              },
-              body: text25Bold(
-                context: context,
-                text: "Displaying Posts",
+                    SliverPadding(
+                      padding: const EdgeInsets.all(15),
+                      sliver: SliverList(
+                        delegate: SliverChildListDelegate(
+                          [
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: circleAvatar(
+                                backgroundImage: cachedNetworkImageProvider(
+                                  url: conclave.displayPic,
+                                ),
+                                radius: 35,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: text20SemiBold(
+                                    context: context,
+                                    text: "c/${conclave.name}",
+                                  ),
+                                ),
+                                const SizedBox(width: 10),
+                                conclave.moderators.contains(user.uid)
+                                    ? outlinedButton(
+                                        context: context,
+                                        onPressed: () =>
+                                            navigateToModToolsScreen(context),
+                                        child: text17SemiBoldItalic(
+                                          context: context,
+                                          text: "Mod Tools",
+                                        ),
+                                      )
+                                    : outlinedButton(
+                                        context: context,
+                                        onPressed: () =>
+                                            joinConclave(ref, context, conclave),
+                                        child: text17SemiBoldItalic(
+                                          context: context,
+                                          text: conclave.conversers
+                                                  .contains(user.uid)
+                                              ? "Joined"
+                                              : "Join",
+                                        ),
+                                      ),
+                              ],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: Row(
+                                children: [
+                                  text16Medium(
+                                    context: context,
+                                    text: conclave.conversers.length == 1
+                                        ? "${conclave.conversers.length} Converser"
+                                        : "${conclave.conversers.length} Conversers",
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(horizontal: 5),
+                                    child: text16Medium(
+                                      context: context,
+                                      text: "·",
+                                    ),
+                                  ),
+                                  text16Medium(
+                                    context: context,
+                                    text: conclave.moderators.length == 1
+                                        ? "${conclave.moderators.length} Moderator"
+                                        : "${conclave.moderators.length} Moderators",
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ];
+                },
+                body: text25Bold(
+                  context: context,
+                  text: "Displaying Posts",
+                ),
               ),
+              error: (error, stackTrace) => ErrorText(
+                error: error.toString(),
+              ),
+              loading: () => const Loader(),
             ),
-            error: (error, stackTrace) => ErrorText(
-              error: error.toString(),
-            ),
-            loading: () => const Loader(),
-          ),
+      ),
     );
   }
 }

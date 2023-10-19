@@ -10,6 +10,8 @@ import 'dart:io';
 import 'package:converse/providers/storage_repository_provider.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../../common/widgets/compress_file.dart';
+
 final postControllerProvider =
     StateNotifierProvider<PostController, bool>((ref) {
   final postRepository = ref.watch(postRepositoryProvider);
@@ -145,12 +147,21 @@ class PostController extends StateNotifier<bool> {
     state = true; // loading starts
     String postId = const Uuid().v1();
     final user = _ref.read(userProvider)!;
+
+    // to compress image
+    final resultFile = await compressFile(
+      file!,
+      quality: 50,
+    );
+
+    final compressedFile = resultFile['file'] as File;
+    final dir = resultFile['dir'] as Directory;
+
     final imageRes = await _storageRepository.storeFile(
       path: 'posts/${selectedConclave.name}',
       id: postId,
-      file: file,
+      file: compressedFile,
     );
-
     imageRes.fold(
       (l) => toastInfo(
         context: context,
@@ -173,6 +184,11 @@ class PostController extends StateNotifier<bool> {
           awards: [],
           link: r,
         );
+
+        // to delete directory
+        if (dir.existsSync()) {
+          await dir.delete(recursive: true);
+        }
 
         final res = await _postRepository.addPost(post);
 

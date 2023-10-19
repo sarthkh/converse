@@ -50,7 +50,7 @@ class ConclaveListDrawerContent extends ConsumerWidget {
                 onTap: () => navigateToCraftConclaveScreen(context),
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
-                    width: 0.35,
+                    width: 0.75,
                     color: Theme.of(context).hintColor,
                   ),
                   borderRadius: BorderRadius.circular(15),

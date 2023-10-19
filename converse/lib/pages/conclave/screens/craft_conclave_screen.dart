@@ -56,7 +56,6 @@ class _CraftConclaveScreenState extends ConsumerState<CraftConclaveScreen> {
                   iconName: "assets/images/svgs/conclave/conclave.svg",
                   hintText: "c/Conclave_Name",
                   func: (value) {},
-                  maxLength: 50,
                   controller: conclaveNameController,
                   isPasswordField: false,
                 ),

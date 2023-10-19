@@ -163,6 +163,34 @@ Widget text16Medium({
   );
 }
 
+Widget text17Medium({
+  required BuildContext context,
+  required String text,
+}) {
+  return Text(
+    text,
+    style: TextStyle(
+      fontFamily: 'custom_medium',
+      fontSize: 17,
+      color: Theme.of(context).textTheme.bodyMedium!.color,
+    ),
+  );
+}
+
+Widget text16SemiBold({
+  required BuildContext context,
+  required String text,
+}) {
+  return Text(
+    text,
+    style: TextStyle(
+      fontFamily: 'custom_semi-bold',
+      fontSize: 16,
+      color: Theme.of(context).textTheme.bodyLarge!.color,
+    ),
+  );
+}
+
 Widget text20SemiBold({
   required BuildContext context,
   required String text,
@@ -174,7 +202,6 @@ Widget text20SemiBold({
       fontSize: 20,
       color: Theme.of(context).textTheme.bodyMedium!.color,
     ),
-    maxLines: 3,
   );
 }
 
@@ -220,6 +247,8 @@ Widget text16Bold({
       fontSize: 16,
       color: Theme.of(context).textTheme.bodyLarge!.color,
     ),
+    overflow: TextOverflow.ellipsis,
+    maxLines: 1,
   );
 }
 
@@ -247,6 +276,21 @@ Widget text20Bold({
       fontFamily: 'custom_bold',
       fontSize: 20,
       color: Theme.of(context).textTheme.bodyLarge!.color,
+    ),
+  );
+}
+
+Widget text20Heavy({
+  required BuildContext context,
+  required String text,
+}) {
+  return Text(
+    text,
+    style: TextStyle(
+      fontFamily: 'custom_heavy',
+      fontSize: 20,
+      letterSpacing: 1,
+      color: Theme.of(context).primaryColor,
     ),
   );
 }
