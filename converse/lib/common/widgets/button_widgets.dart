@@ -68,9 +68,13 @@ Widget outlinedButton({
 Widget textButton({
   required Function() onPressed,
   required Widget child,
+  EdgeInsetsGeometry? padding,
 }) {
-  return TextButton(
-    onPressed: onPressed,
-    child: child,
+  return Container(
+    padding: padding,
+    child: TextButton(
+      onPressed: onPressed,
+      child: child,
+    ),
   );
 }

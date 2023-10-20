@@ -13,4 +13,17 @@ class Constants {
     FeedScreen(),
     AddPostScreen(),
   ];
+
+  static const awardsPath = 'assets/images/pngs/awards';
+
+  static const awards = {
+    'awesomeAns': '${Constants.awardsPath}/awesomeanswer.png',
+    'gold': '${Constants.awardsPath}/gold.png',
+    'platinum': '${Constants.awardsPath}/platinum.png',
+    'helpful': '${Constants.awardsPath}/helpful.png',
+    'plusone': '${Constants.awardsPath}/plusone.png',
+    'rocket': '${Constants.awardsPath}/rocket.png',
+    'thankyou': '${Constants.awardsPath}/thankyou.png',
+    'til': '${Constants.awardsPath}/til.png',
+  };
 }

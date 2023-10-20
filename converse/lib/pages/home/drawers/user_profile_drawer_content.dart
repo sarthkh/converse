@@ -24,6 +24,7 @@ class UserProfileDrawerContent extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider)!;
+    final isGuest = !user.isAuthenticated;
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -64,10 +65,12 @@ class UserProfileDrawerContent extends ConsumerWidget {
                     BlendMode.srcIn,
                   ),
                 ),
-                onTap: () => navigateToUserProfileScreen(
-                  context,
-                  user.uid,
-                ),
+                onTap: () => isGuest
+                    ? null
+                    : navigateToUserProfileScreen(
+                        context,
+                        user.uid,
+                      ),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),

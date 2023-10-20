@@ -1,9 +1,13 @@
+import 'dart:typed_data';
+
 import 'package:converse/auth/controller/auth_controller.dart';
 import 'package:converse/common/widgets/popup_message.dart';
+import 'package:converse/core/enums/enums.dart';
 import 'package:converse/models/comment_model.dart';
 import 'package:converse/models/conclave_model.dart';
 import 'package:converse/models/post_model.dart';
 import 'package:converse/pages/post/repository/post_repository.dart';
+import 'package:converse/pages/user_profile/controller/user_profile_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -40,6 +44,12 @@ final getCommentsOfPostProvider = StreamProvider.family((ref, String postId) {
   final postController = ref.watch(postControllerProvider.notifier);
 
   return postController.fetchCommentsOfPost(postId);
+});
+
+final guestPostsProvider = StreamProvider((ref) {
+  final postController = ref.watch(postControllerProvider.notifier);
+
+  return postController.fetchGuestPosts();
 });
 
 class PostController extends StateNotifier<bool> {
@@ -83,6 +93,10 @@ class PostController extends StateNotifier<bool> {
     );
 
     final res = await _postRepository.addPost(post);
+
+    _ref
+        .read(userProfileControllerProvider.notifier)
+        .updateUserKarma(UserKarma.textPost);
 
     state = false; // loading stops
 
@@ -131,6 +145,10 @@ class PostController extends StateNotifier<bool> {
 
     final res = await _postRepository.addPost(post);
 
+    _ref
+        .read(userProfileControllerProvider.notifier)
+        .updateUserKarma(UserKarma.linkPost);
+
     state = false; // loading stops
 
     res.fold(
@@ -155,6 +173,7 @@ class PostController extends StateNotifier<bool> {
     required String title,
     required Conclave selectedConclave,
     required File? file,
+    required Uint8List? webFile,
   }) async {
     state = true; // loading starts
     String postId = const Uuid().v1();
@@ -173,6 +192,7 @@ class PostController extends StateNotifier<bool> {
       path: 'posts/${selectedConclave.name}',
       id: postId,
       file: compressedFile,
+      webFile: webFile,
     );
     imageRes.fold(
       (l) => toastInfo(
@@ -203,6 +223,10 @@ class PostController extends StateNotifier<bool> {
         }
 
         final res = await _postRepository.addPost(post);
+
+        _ref
+            .read(userProfileControllerProvider.notifier)
+            .updateUserKarma(UserKarma.imagePost);
 
         state = false; // loading stops
 
@@ -235,6 +259,10 @@ class PostController extends StateNotifier<bool> {
   void deletePost(BuildContext context, Post post) async {
     final res = await _postRepository.deletePost(post);
 
+    _ref
+        .read(userProfileControllerProvider.notifier)
+        .updateUserKarma(UserKarma.deletePost);
+
     res.fold(
       (l) => null,
       (r) {
@@ -251,11 +279,21 @@ class PostController extends StateNotifier<bool> {
 
   void upvote(Post post) {
     final uid = _ref.read(userProvider)!.uid;
+
+    _ref
+        .read(userProfileControllerProvider.notifier)
+        .updateUserKarma(UserKarma.vote);
+
     _postRepository.upvote(post, uid);
   }
 
   void downvote(Post post) {
     final uid = _ref.read(userProvider)!.uid;
+
+    _ref
+        .read(userProfileControllerProvider.notifier)
+        .updateUserKarma(UserKarma.vote);
+
     _postRepository.downVote(post, uid);
   }
 
@@ -281,6 +319,10 @@ class PostController extends StateNotifier<bool> {
 
     final res = await _postRepository.addPostComment(comment);
 
+    _ref
+        .read(userProfileControllerProvider.notifier)
+        .updateUserKarma(UserKarma.comment);
+
     res.fold(
       (l) => toastInfo(
         context: context,
@@ -293,5 +335,40 @@ class PostController extends StateNotifier<bool> {
 
   Stream<List<Comment>> fetchCommentsOfPost(String postId) {
     return _postRepository.getCommentsOfPost(postId);
+  }
+
+  void awardPost({
+    required BuildContext context,
+    required Post post,
+    required String award,
+  }) async {
+    final user = _ref.read(userProvider)!;
+
+    final res = await _postRepository.awardPost(
+      post,
+      award,
+      user.uid,
+    );
+
+    res.fold(
+        (l) => toastInfo(
+              context: context,
+              msg: l.message,
+              type: ToastType.fail,
+            ), (r) {
+      _ref
+          .read(userProfileControllerProvider.notifier)
+          .updateUserKarma(UserKarma.awardPost);
+
+      _ref.read(userProvider.notifier).update((state) {
+        state?.awards.remove(award);
+        return state;
+      });
+      GoRouter.of(context).pop();
+    });
+  }
+
+  Stream<List<Post>> fetchGuestPosts() {
+    return _postRepository.fetchGuestPosts();
   }
 }

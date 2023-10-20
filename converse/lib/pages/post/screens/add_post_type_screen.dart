@@ -7,6 +7,8 @@ import 'package:converse/common/widgets/popup_message.dart';
 import 'package:converse/common/widgets/text_widgets.dart';
 import 'package:converse/pages/conclave/controller/conclave_controller.dart';
 import 'package:converse/pages/post/controller/post_controller.dart';
+import 'package:converse/responsive/responsive.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -34,11 +36,16 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
   File? bannerFile;
   List<Conclave> conclaves = [];
   Conclave? selectedConclave;
+  Uint8List? bannerWebFile;
 
   void selectBannerImage() async {
     final res = await pickImage();
 
     if (res != null) {
+      if (kIsWeb) {
+        bannerWebFile = res.files.first.bytes;
+      }
+
       setState(() {
         bannerFile = File(res.files.first.path!);
       });
@@ -55,12 +62,13 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
 
   void sharePost() {
     if (widget.type == 'Image' &&
-        bannerFile != null &&
+        (bannerFile != null || bannerWebFile != null) &&
         titleController.text.isNotEmpty) {
       ref.read(postControllerProvider.notifier).shareImagePost(
             context: context,
             title: titleController.text.trim(),
             selectedConclave: selectedConclave ?? conclaves[0],
+            webFile: bannerWebFile,
             file: bannerFile,
           );
     } else if (widget.type == 'Text' && titleController.text.isNotEmpty) {
@@ -121,109 +129,113 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
             )
           ],
         ),
-        body: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  textField(
-                    context: context,
-                    controller: titleController,
-                    hintText: "Enter Title",
-                    maxLength: 150,
-                  ),
-                  const SizedBox(height: 25),
-                  if (isTypeImage)
-                    GestureDetector(
-                      onTap: selectBannerImage,
-                      child: DottedBorder(
-                        radius: const Radius.circular(15),
-                        dashPattern: const [10, 5],
-                        strokeCap: StrokeCap.round,
-                        color: Theme.of(context).cardColor,
-                        borderType: BorderType.RRect,
-                        child: Container(
-                          width: double.infinity,
-                          height: 150,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
+        body: Responsive(
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    textField(
+                      context: context,
+                      controller: titleController,
+                      hintText: "Enter Title",
+                      maxLength: 150,
+                    ),
+                    const SizedBox(height: 25),
+                    if (isTypeImage)
+                      GestureDetector(
+                        onTap: selectBannerImage,
+                        child: DottedBorder(
+                          radius: const Radius.circular(15),
+                          dashPattern: const [10, 5],
+                          strokeCap: StrokeCap.round,
+                          color: Theme.of(context).cardColor,
+                          borderType: BorderType.RRect,
+                          child: Container(
+                            width: double.infinity,
+                            height: 150,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: bannerWebFile != null
+                                ? Image.memory(bannerWebFile!)
+                                : bannerFile != null
+                                    ? Image.file(bannerFile!)
+                                    : Center(
+                                        child: SvgPicture.asset(
+                                          "assets/images/svgs/conclave/camera.svg",
+                                          colorFilter: ColorFilter.mode(
+                                            Theme.of(context).hintColor,
+                                            BlendMode.srcIn,
+                                          ),
+                                          height: 45,
+                                        ),
+                                      ),
                           ),
-                          child: bannerFile != null
-                              ? Image.file(bannerFile!)
-                              : Center(
-                                  child: SvgPicture.asset(
-                                    "assets/images/svgs/conclave/camera.svg",
-                                    colorFilter: ColorFilter.mode(
-                                      Theme.of(context).hintColor,
-                                      BlendMode.srcIn,
-                                    ),
-                                    height: 45,
-                                  ),
-                                ),
                         ),
                       ),
+                    if (isTypeText)
+                      textField(
+                        context: context,
+                        controller: descriptionController,
+                        hintText: "Enter Description",
+                        maxLines: 5,
+                      ),
+                    if (isTypeLink)
+                      textField(
+                        context: context,
+                        controller: linkController,
+                        hintText: "Enter Link",
+                      ),
+                    const SizedBox(height: 25),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: text16Regular(
+                        context: context,
+                        text: "Select Conclave",
+                      ),
                     ),
-                  if (isTypeText)
-                    textField(
-                      context: context,
-                      controller: descriptionController,
-                      hintText: "Enter Description",
-                      maxLines: 5,
-                    ),
-                  if (isTypeLink)
-                    textField(
-                      context: context,
-                      controller: linkController,
-                      hintText: "Enter Link",
-                    ),
-                  const SizedBox(height: 25),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: text16Regular(
-                      context: context,
-                      text: "Select Conclave",
-                    ),
-                  ),
-                  ref.watch(userConclavesProvider).when(
-                        data: (data) {
-                          conclaves = data;
+                    ref.watch(userConclavesProvider).when(
+                          data: (data) {
+                            conclaves = data;
 
-                          if (data.isEmpty) {
-                            return const SizedBox();
-                          }
-                          return DropdownButton(
-                            isExpanded: true,
-                            value: selectedConclave ?? data[0],
-                            items: data
-                                .map(
-                                  (e) => DropdownMenuItem(
-                                    value: e,
-                                    child: text17SemiBold(
-                                      context: context,
-                                      text: e.name,
-                                      overflow: TextOverflow.visible,
+                            if (data.isEmpty) {
+                              return const SizedBox();
+                            }
+                            return DropdownButton(
+                              isExpanded: true,
+                              value: selectedConclave ?? data[0],
+                              items: data
+                                  .map(
+                                    (e) => DropdownMenuItem(
+                                      value: e,
+                                      child: text17SemiBold(
+                                        context: context,
+                                        text: e.name,
+                                        overflow: TextOverflow.visible,
+                                      ),
                                     ),
-                                  ),
-                                )
-                                .toList(),
-                            onChanged: (val) {
-                              setState(() {
-                                selectedConclave = val;
-                              });
-                            },
-                          );
-                        },
-                        error: (error, stackTrace) => ErrorText(
-                          error: error.toString(),
+                                  )
+                                  .toList(),
+                              onChanged: (val) {
+                                setState(() {
+                                  selectedConclave = val;
+                                });
+                              },
+                            );
+                          },
+                          error: (error, stackTrace) => ErrorText(
+                            error: error.toString(),
+                          ),
+                          loading: () => const Loader(),
                         ),
-                        loading: () => const Loader(),
-                      ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            if (isLoading) const Loader(),
-          ],
+              if (isLoading) const Loader(),
+            ],
+          ),
         ),
       ),
     );

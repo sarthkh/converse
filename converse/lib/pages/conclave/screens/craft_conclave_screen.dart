@@ -45,30 +45,32 @@ class _CraftConclaveScreenState extends ConsumerState<CraftConclaveScreen> {
           actions: [],
           title: text22SemiBold(context: context, text: "Craft a Conclave"),
         ),
-        body: Stack(
-          children: [
-            Column(
-              children: [
-                const SizedBox(height: 35),
-                AppTextField(
-                  height: 100,
-                  text: "Conclave Name",
-                  iconName: "assets/images/svgs/conclave/conclave.svg",
-                  hintText: "c/Conclave_Name",
-                  func: (value) {},
-                  controller: conclaveNameController,
-                  isPasswordField: false,
-                ),
-                const SizedBox(height: 50),
-                appButton(
-                  context: context,
-                  buttonName: "Craft",
-                  func: craftConclave,
-                )
-              ],
-            ),
-            if (isLoading) const Loader(),
-          ],
+        body: Center(
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  const SizedBox(height: 35),
+                  AppTextField(
+                    height: 100,
+                    text: "Conclave Name",
+                    iconName: "assets/images/svgs/conclave/conclave.svg",
+                    hintText: "c/Conclave_Name",
+                    func: (value) {},
+                    controller: conclaveNameController,
+                    isPasswordField: false,
+                  ),
+                  const SizedBox(height: 50),
+                  appButton(
+                    context: context,
+                    buttonName: "Craft",
+                    func: craftConclave,
+                  )
+                ],
+              ),
+              if (isLoading) const Loader(),
+            ],
+          ),
         ),
       ),
     );

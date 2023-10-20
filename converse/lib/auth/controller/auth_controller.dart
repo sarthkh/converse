@@ -45,9 +45,9 @@ class AuthController extends StateNotifier<bool> {
     return _authRepository.getUserData(uid);
   }
 
-  void googleSignIn(BuildContext context) async {
+  void googleSignIn(BuildContext context, bool isFromLogin) async {
     state = true; // start loading
-    final user = await _authRepository.signInWithGoogle();
+    final user = await _authRepository.signInWithGoogle(isFromLogin);
     state = false; // stop loading
 
     // l -> failure, r -> success
@@ -64,5 +64,22 @@ class AuthController extends StateNotifier<bool> {
 
   void logout() async {
     _authRepository.logout();
+  }
+
+  void guestSignIn(BuildContext context) async {
+    state = true; // start loading
+    final user = await _authRepository.signInAsGuest();
+    state = false; // stop loading
+
+    // l -> failure, r -> success
+    user.fold(
+      (l) => toastInfo(
+        context: context,
+        msg: l.message,
+        type: ToastType.fail,
+      ),
+      // on success update the userProvider state with new user
+      (r) => _ref.read(userProvider.notifier).update((state) => r),
+    );
   }
 }

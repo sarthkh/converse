@@ -1,3 +1,4 @@
+import 'package:converse/auth/controller/auth_controller.dart';
 import 'package:converse/common/widgets/app_bar.dart';
 import 'package:converse/common/widgets/app_textfield.dart';
 import 'package:converse/common/widgets/button_widgets.dart';
@@ -56,6 +57,9 @@ class _PostCommentScreenState extends ConsumerState<PostCommentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = ref.watch(userProvider)!;
+    final isGuest = !user.isAuthenticated;
+
     return Scaffold(
       appBar: buildAppbar(
         context: context,
@@ -73,30 +77,31 @@ class _PostCommentScreenState extends ConsumerState<PostCommentScreen> {
                 child: Column(
                   children: [
                     PostCard(post: data),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 6,
-                      ).copyWith(bottom: 16),
-                      child: textField(
-                        context: context,
-                        suffixIcon: iconButton(
-                          onPressed: () {
-                            addPostComment(data);
-                          },
-                          icon: SvgPicture.asset(
-                            "assets/images/svgs/home/send_comment.svg",
-                            colorFilter: ColorFilter.mode(
-                              Theme.of(context).hintColor,
-                              BlendMode.srcIn,
+                    if (!isGuest)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 6,
+                        ).copyWith(bottom: 16),
+                        child: textField(
+                          context: context,
+                          suffixIcon: iconButton(
+                            onPressed: () {
+                              addPostComment(data);
+                            },
+                            icon: SvgPicture.asset(
+                              "assets/images/svgs/home/send_comment.svg",
+                              colorFilter: ColorFilter.mode(
+                                Theme.of(context).hintColor,
+                                BlendMode.srcIn,
+                              ),
                             ),
+                            padding: const EdgeInsets.only(right: 8),
                           ),
-                          padding: const EdgeInsets.only(right: 8),
+                          controller: commentController,
+                          hintText: "What are your thoughts?",
                         ),
-                        controller: commentController,
-                        hintText: "What are your thoughts?",
                       ),
-                    ),
                     ref.watch(getCommentsOfPostProvider(widget.postId)).when(
                           data: (data) {
                             return ListView.builder(

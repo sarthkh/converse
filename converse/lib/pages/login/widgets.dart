@@ -3,19 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+bool isFromLogin = true;
+
 void googleSignIn(BuildContext context, WidgetRef ref) {
-  ref.read(authControllerProvider.notifier).googleSignIn(context);
+  ref.read(authControllerProvider.notifier).googleSignIn(context, isFromLogin);
 }
 
 Widget thirdPartyLogin(BuildContext context, WidgetRef ref) {
   return Container(
     margin: const EdgeInsets.only(
-      left: 75,
-      right: 75,
+      left: 35,
+      right: 35,
       top: 65,
       bottom: 50,
     ),
-    width: 345,
+    width: 225,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [

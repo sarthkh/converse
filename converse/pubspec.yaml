@@ -123,6 +123,15 @@ flutter:
     # splash
     - assets/images/pngs/splash/icon_dark.png
     - assets/images/pngs/splash/icon_light.png
+    # awards
+    - assets/images/pngs/awards/awesomeanswer.png
+    - assets/images/pngs/awards/gold.png
+    - assets/images/pngs/awards/helpful.png
+    - assets/images/pngs/awards/platinum.png
+    - assets/images/pngs/awards/plusone.png
+    - assets/images/pngs/awards/rocket.png
+    - assets/images/pngs/awards/thankyou.png
+    - assets/images/pngs/awards/til.png
     # <----- svgs ----->
     # icon
     - assets/images/svgs/icon/icon_dark.svg
@@ -146,6 +155,7 @@ flutter:
     - assets/images/svgs/register/alert.svg
     - assets/images/svgs/register/show.svg
     - assets/images/svgs/register/hide.svg
+    - assets/images/svgs/register/guest.svg
     # home
     - assets/images/svgs/home/menu.svg
     - assets/images/svgs/home/search.svg
@@ -166,6 +176,7 @@ flutter:
     - assets/images/svgs/home/mod_tools.svg
     - assets/images/svgs/home/send_comment.svg
     - assets/images/svgs/home/reply.svg
+    - assets/images/svgs/home/gift.svg
     # conclave
     - assets/images/svgs/conclave/conclave.svg
     - assets/images/svgs/conclave/moderator.svg

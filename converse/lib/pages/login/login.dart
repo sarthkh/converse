@@ -8,6 +8,7 @@ import 'package:converse/common/widgets/app_bar.dart';
 import 'package:converse/common/widgets/app_textfield.dart';
 import 'package:converse/pages/login/widgets.dart';
 import 'package:converse/common/widgets/loader.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 final passwordVisibleStateProvider = StateProvider<bool>((ref) {
@@ -20,6 +21,13 @@ class Login extends ConsumerWidget {
   // void loginHandler() {
   //   print("login");
   // }
+
+  void guestSignIn(
+    WidgetRef ref,
+    BuildContext context,
+  ) {
+    ref.read(authControllerProvider.notifier).guestSignIn(context);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -39,7 +47,22 @@ class Login extends ConsumerWidget {
             appBar: buildAppbar(
               context: context,
               bottom: true,
-              actions: const [],
+              actions: [
+                iconButton(
+                  onPressed: () => guestSignIn(
+                    ref,
+                    context,
+                  ),
+                  icon: SvgPicture.asset(
+                    "assets/images/svgs/register/guest.svg",
+                    colorFilter: ColorFilter.mode(
+                      Theme.of(context).hintColor,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                  padding: const EdgeInsets.only(right: 15),
+                ),
+              ],
               title: text24Medium(context: context, text: "Welcome Back"),
             ),
             body: Stack(

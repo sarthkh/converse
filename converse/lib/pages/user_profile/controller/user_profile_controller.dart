@@ -1,6 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:converse/auth/controller/auth_controller.dart';
 import 'package:converse/common/widgets/compress_file.dart';
 import 'package:converse/common/widgets/popup_message.dart';
+import 'package:converse/core/enums/enums.dart';
 import 'package:converse/models/user_model.dart';
 import 'package:converse/pages/user_profile/repository/user_profile_respository.dart';
 import 'package:flutter/cupertino.dart';
@@ -43,15 +46,17 @@ class UserProfileController extends StateNotifier<bool> {
     required BuildContext context,
     required File? bannerFile,
     required File? avatarFile,
+    required Uint8List? bannerWebFile,
+    required Uint8List? avatarWebFile,
     required String name,
   }) async {
     state = true; // start loading
     UserModel user = _ref.read(userProvider)!;
 
-    if (avatarFile != null) {
+    if (avatarFile != null || avatarWebFile != null) {
       // to compress avatar
       final resultAvatar = await compressFile(
-        avatarFile,
+        avatarFile!,
         quality: 50,
       );
 
@@ -63,6 +68,7 @@ class UserProfileController extends StateNotifier<bool> {
         path: 'users/avatar',
         id: user.uid,
         file: compressedAvatar,
+        webFile: avatarWebFile,
       );
       // to handle result
       res.fold(
@@ -87,10 +93,10 @@ class UserProfileController extends StateNotifier<bool> {
       );
     }
 
-    if (bannerFile != null) {
+    if (bannerFile != null || bannerWebFile != null) {
       // to compress banner
       final resultBanner = await compressFile(
-        bannerFile,
+        bannerFile!,
         quality: 50,
       );
 
@@ -102,6 +108,7 @@ class UserProfileController extends StateNotifier<bool> {
         path: 'users/banner',
         id: user.uid,
         file: compressedBanner,
+        webFile: bannerWebFile,
       );
       res.fold(
         (l) => toastInfo(
@@ -147,5 +154,22 @@ class UserProfileController extends StateNotifier<bool> {
 
   Stream<List<Post>> getUserPosts(String uid) {
     return _userProfileRepository.getUserPosts(uid);
+  }
+
+  void updateUserKarma(UserKarma karma) async {
+    UserModel user = _ref.read(userProvider)!;
+    user = user.copyWith(
+      karma: user.karma + karma.karma,
+    );
+
+    final res = await _userProfileRepository.updateUserKarma(user);
+    res.fold(
+      (l) => null,
+      (r) {
+        _ref.read(userProvider.notifier).update(
+              (state) => user,
+            );
+      },
+    );
   }
 }

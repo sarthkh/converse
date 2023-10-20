@@ -36,6 +36,7 @@ class ConclaveScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(userProvider)!;
+    final isGuest = !user.isAuthenticated;
 
     return Scaffold(
       body: SafeArea(
@@ -110,29 +111,34 @@ class ConclaveScreen extends ConsumerWidget {
                                     text: "c/${conclave.name}",
                                   ),
                                 ),
-                                const SizedBox(width: 10),
-                                conclave.moderators.contains(user.uid)
-                                    ? outlinedButton(
-                                        context: context,
-                                        onPressed: () =>
-                                            navigateToModToolsScreen(context),
-                                        child: text17SemiBoldItalic(
-                                          context: context,
-                                          text: "Mod Tools",
-                                        ),
-                                      )
-                                    : outlinedButton(
-                                        context: context,
-                                        onPressed: () => joinConclave(
-                                            ref, context, conclave),
-                                        child: text17SemiBoldItalic(
-                                          context: context,
-                                          text: conclave.conversers
-                                                  .contains(user.uid)
-                                              ? "Joined"
-                                              : "Join",
-                                        ),
-                                      ),
+                                if (!isGuest)
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child:
+                                        conclave.moderators.contains(user.uid)
+                                            ? outlinedButton(
+                                                context: context,
+                                                onPressed: () =>
+                                                    navigateToModToolsScreen(
+                                                        context),
+                                                child: text17SemiBoldItalic(
+                                                  context: context,
+                                                  text: "Mod Tools",
+                                                ),
+                                              )
+                                            : outlinedButton(
+                                                context: context,
+                                                onPressed: () => joinConclave(
+                                                    ref, context, conclave),
+                                                child: text17SemiBoldItalic(
+                                                  context: context,
+                                                  text: conclave.conversers
+                                                          .contains(user.uid)
+                                                      ? "Joined"
+                                                      : "Join",
+                                                ),
+                                              ),
+                                  ),
                               ],
                             ),
                             Padding(

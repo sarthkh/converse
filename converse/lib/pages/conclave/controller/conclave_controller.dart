@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:converse/auth/controller/auth_controller.dart';
 import 'package:converse/common/widgets/compress_file.dart';
 import 'package:converse/common/widgets/popup_message.dart';
@@ -134,13 +136,15 @@ class ConclaveController extends StateNotifier<bool> {
     required Conclave conclave,
     required File? bannerFile,
     required File? displayPicFile,
+    required Uint8List? bannerWebFile,
+    required Uint8List? displayPicWebFile,
   }) async {
     state = true; // start loading
 
-    if (displayPicFile != null) {
+    if (displayPicFile != null || displayPicWebFile != null) {
       // to compress displayPic
       final resultDisplayPic = await compressFile(
-        displayPicFile,
+        displayPicFile!,
         quality: 50,
       );
 
@@ -152,6 +156,7 @@ class ConclaveController extends StateNotifier<bool> {
         path: 'conclaves/displayPic',
         id: conclave.name,
         file: compressedDisplayPic,
+        webFile: displayPicWebFile,
       );
       // to handle result
       res.fold(
@@ -176,10 +181,10 @@ class ConclaveController extends StateNotifier<bool> {
       );
     }
 
-    if (bannerFile != null) {
+    if (bannerFile != null || bannerWebFile != null) {
       // to compress banner
       final resultBanner = await compressFile(
-        bannerFile,
+        bannerFile!,
         quality: 50,
       );
 
@@ -191,6 +196,7 @@ class ConclaveController extends StateNotifier<bool> {
         path: 'conclaves/banner',
         id: conclave.name,
         file: compressedBanner,
+        webFile: bannerWebFile,
       );
       res.fold(
         (l) => toastInfo(

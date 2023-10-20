@@ -9,11 +9,13 @@ import 'package:converse/pages/home/delegates/search_conclave_delegate.dart';
 import 'package:converse/pages/home/drawers/custom_drawer.dart';
 import 'package:converse/pages/home/drawers/user_profile_drawer_content.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:converse/pages/home/drawers/conclave_list_drawer_content.dart';
+import 'package:go_router/go_router.dart';
 
 enum DrawerType {
   conclaveList,
@@ -45,6 +47,7 @@ class _HomeState extends ConsumerState<Home> {
     final controller = ZoomDrawerController();
     final activeDrawer = ref.watch(activeDrawerProvider);
     final user = ref.watch(userProvider)!;
+    final isGuest = !user.isAuthenticated;
 
     return CustomDrawer(
       controller: controller,
@@ -113,25 +116,38 @@ class _HomeState extends ConsumerState<Home> {
           }),
         ),
         body: Constants.tabWidgets[_page],
-        bottomNavigationBar: CupertinoTabBar(
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home_rounded,
+        bottomNavigationBar: isGuest || kIsWeb
+            ? null
+            : CupertinoTabBar(
+                items: const [
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.home_rounded,
+                    ),
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.add_rounded,
+                    ),
+                  ),
+                ],
+                onTap: onPageChange,
+                currentIndex: _page,
+                activeColor: Theme.of(context).hintColor,
+                height: 65,
+                backgroundColor: Theme.of(context).colorScheme.surface,
               ),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.add_rounded,
-              ),
-            ),
-          ],
-          onTap: onPageChange,
-          currentIndex: _page,
-          activeColor: Theme.of(context).hintColor,
-          height: 65,
-          backgroundColor: Theme.of(context).colorScheme.surface,
-        ),
+        floatingActionButton: kIsWeb
+            ? FloatingActionButton(
+                backgroundColor: Theme.of(context).cardColor.withOpacity(0.35),
+                onPressed: () {
+                  GoRouter.of(context).push('/add-post');
+                },
+                child: const Icon(
+                  Icons.add_rounded,
+                ),
+              )
+            : null,
       ),
       isRtl: activeDrawer == DrawerType.userProfile,
     );

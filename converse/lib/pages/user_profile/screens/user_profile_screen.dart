@@ -125,9 +125,8 @@ class UserProfileScreen extends ConsumerWidget {
                             const SizedBox(height: 15),
                             Divider(
                               thickness: 2,
-                              color: Theme.of(context).hintColor,
+                              color: Theme.of(context).canvasColor,
                             ),
-                            const SizedBox(height: 15),
                           ],
                         ),
                       ),
