@@ -17,6 +17,7 @@ class CommentCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
+      color: Theme.of(context).drawerTheme.backgroundColor?.withOpacity(0.35),
       padding: const EdgeInsets.symmetric(
         vertical: 8,
         horizontal: 16,
@@ -38,6 +39,7 @@ class CommentCard extends ConsumerWidget {
                         context: context,
                         text: "u/${comment.username}",
                       ),
+                      const SizedBox(height: 3.5),
                       text16SemiBold(
                         context: context,
                         text: comment.text,

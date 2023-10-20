@@ -28,6 +28,8 @@ class UserProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final currentUser = ref.read(userProvider)!.uid;
+
     return Scaffold(
       body: SafeArea(
         child: ref.watch(getUserDataProvider(uId)).when(
@@ -76,24 +78,28 @@ class UserProfileScreen extends ConsumerWidget {
                           ),
                           Container(
                             alignment: Alignment.bottomCenter,
-                            padding:
-                                const EdgeInsets.all(35).copyWith(bottom: 115),
+                            padding: const EdgeInsets.all(35).copyWith(
+                              bottom: currentUser == uId ? 115 : 65,
+                            ),
                             child: circleAvatar(
                               backgroundImage: cachedNetworkImageProvider(
                                 url: user.avatar,
                               ),
-                              radius: 50,
+                              radius: currentUser == uId ? 50 : 65,
                             ),
                           ),
                           Container(
                             alignment: Alignment.bottomCenter,
                             padding: const EdgeInsets.all(35),
-                            child: appButton(
-                              context: context,
-                              buttonName: "Edit Profile",
-                              width: 175,
-                              func: () => navigateToEditProfileScreen(context),
-                            ),
+                            child: currentUser == uId
+                                ? appButton(
+                                    context: context,
+                                    buttonName: "Edit Profile",
+                                    width: 160,
+                                    func: () =>
+                                        navigateToEditProfileScreen(context),
+                                  )
+                                : const SizedBox.shrink(),
                           ),
                         ],
                       ),

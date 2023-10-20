@@ -5,6 +5,7 @@ import 'package:converse/common/widgets/button_widgets.dart';
 import 'package:converse/common/widgets/error_text.dart';
 import 'package:converse/common/widgets/image_widgets.dart';
 import 'package:converse/common/widgets/loader.dart';
+import 'package:converse/common/widgets/popup_message.dart';
 import 'package:converse/common/widgets/text_widgets.dart';
 import 'package:converse/constants/constants.dart';
 import 'package:converse/core/utils.dart';
@@ -66,12 +67,20 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   }
 
   void save() {
-    ref.read(userProfileControllerProvider.notifier).editUserProfile(
-          context: context,
-          avatarFile: avatarFile,
-          bannerFile: bannerFile,
-          name: nameController.text.trim(),
-        );
+    String nameText = nameController.text.trim();
+
+    nameText.isNotEmpty
+        ? ref.read(userProfileControllerProvider.notifier).editUserProfile(
+              context: context,
+              avatarFile: avatarFile,
+              bannerFile: bannerFile,
+              name: nameText,
+            )
+        : toastInfo(
+            context: context,
+            msg: "Name cannot be blank!",
+            type: ToastType.alert,
+          );
   }
 
   @override

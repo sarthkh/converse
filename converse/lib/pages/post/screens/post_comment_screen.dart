@@ -45,7 +45,7 @@ class _PostCommentScreenState extends ConsumerState<PostCommentScreen> {
             )
         : toastInfo(
             context: context,
-            msg: "Please write a comment!",
+            msg: "Comment cannot be blank!",
             type: ToastType.alert,
           );
 
@@ -69,55 +69,46 @@ class _PostCommentScreenState extends ConsumerState<PostCommentScreen> {
       ),
       body: ref.watch(getPostByIdProvider(widget.postId)).when(
             data: (data) {
-              return Column(
-                children: [
-                  PostCard(post: data),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                    child: textField(
-                      context: context,
-                      suffixIcon: iconButton(
-                        onPressed: () {
-                          addPostComment(data);
-                        },
-                        icon: SvgPicture.asset(
-                          "assets/images/svgs/home/send_comment.svg",
-                          colorFilter: ColorFilter.mode(
-                            Theme.of(context).hintColor,
-                            BlendMode.srcIn,
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    PostCard(post: data),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 6,
+                      ).copyWith(bottom: 16),
+                      child: textField(
+                        context: context,
+                        suffixIcon: iconButton(
+                          onPressed: () {
+                            addPostComment(data);
+                          },
+                          icon: SvgPicture.asset(
+                            "assets/images/svgs/home/send_comment.svg",
+                            colorFilter: ColorFilter.mode(
+                              Theme.of(context).hintColor,
+                              BlendMode.srcIn,
+                            ),
                           ),
+                          padding: const EdgeInsets.only(right: 8),
                         ),
-                        padding: const EdgeInsets.only(right: 8),
+                        controller: commentController,
+                        hintText: "What are your thoughts?",
                       ),
-                      controller: commentController,
-                      hintText: "What are your thoughts?",
                     ),
-                  ),
-                  Expanded(
-                    child: ref
-                        .watch(getCommentsOfPostProvider(widget.postId))
-                        .when(
+                    ref.watch(getCommentsOfPostProvider(widget.postId)).when(
                           data: (data) {
-                            return SingleChildScrollView(
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              child: Column(
-                                children: [
-                                  ListView.builder(
-                                    shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemCount: data.length,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      final comment = data[index];
-                                      return CommentCard(
-                                        comment: comment,
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: data.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final comment = data[index];
+                                return CommentCard(
+                                  comment: comment,
+                                );
+                              },
                             );
                           },
                           error: (error, stackTrace) => ErrorText(
@@ -125,8 +116,8 @@ class _PostCommentScreenState extends ConsumerState<PostCommentScreen> {
                           ),
                           loading: () => const Loader(),
                         ),
-                  ),
-                ],
+                  ],
+                ),
               );
             },
             error: (error, stackTrace) => ErrorText(
