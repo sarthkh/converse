@@ -9,6 +9,7 @@ import 'package:converse/common/widgets/post_card.dart';
 import 'package:converse/common/widgets/text_widgets.dart';
 import 'package:converse/pages/post/controller/post_controller.dart';
 import 'package:converse/pages/post/widget/comment_card.dart';
+import 'package:converse/responsive/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:converse/models/post_model.dart';
@@ -83,23 +84,25 @@ class _PostCommentScreenState extends ConsumerState<PostCommentScreen> {
                           horizontal: 16,
                           vertical: 6,
                         ).copyWith(bottom: 16),
-                        child: textField(
-                          context: context,
-                          suffixIcon: iconButton(
-                            onPressed: () {
-                              addPostComment(data);
-                            },
-                            icon: SvgPicture.asset(
-                              "assets/images/svgs/home/send_comment.svg",
-                              colorFilter: ColorFilter.mode(
-                                Theme.of(context).hintColor,
-                                BlendMode.srcIn,
+                        child: Responsive(
+                          child: textField(
+                            context: context,
+                            suffixIcon: iconButton(
+                              onPressed: () {
+                                addPostComment(data);
+                              },
+                              icon: SvgPicture.asset(
+                                "assets/images/svgs/home/send_comment.svg",
+                                colorFilter: ColorFilter.mode(
+                                  Theme.of(context).hintColor,
+                                  BlendMode.srcIn,
+                                ),
                               ),
+                              padding: const EdgeInsets.only(right: 8),
                             ),
-                            padding: const EdgeInsets.only(right: 8),
+                            controller: commentController,
+                            hintText: "What are your thoughts?",
                           ),
-                          controller: commentController,
-                          hintText: "What are your thoughts?",
                         ),
                       ),
                     ref.watch(getCommentsOfPostProvider(widget.postId)).when(

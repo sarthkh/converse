@@ -139,7 +139,7 @@ class _HomeState extends ConsumerState<Home> {
               ),
         floatingActionButton: kIsWeb
             ? FloatingActionButton(
-                backgroundColor: Theme.of(context).cardColor.withOpacity(0.35),
+                backgroundColor: Theme.of(context).cardColor,
                 onPressed: () {
                   GoRouter.of(context).push('/add-post');
                 },

@@ -88,54 +88,55 @@ class PostCard extends ConsumerWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 8),
-                  child: Column(
-                    children: [
-                      iconButton(
-                        onPressed: isGuest ? () {} : () => upvotePost(ref),
-                        icon: post.upVotes.contains(user.uid)
-                            ? SvgPicture.asset(
-                                "assets/images/svgs/home/upvote_filled.svg",
-                                colorFilter: ColorFilter.mode(
-                                  Theme.of(context).hintColor,
-                                  BlendMode.srcIn,
+                if (kIsWeb)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Column(
+                      children: [
+                        iconButton(
+                          onPressed: isGuest ? () {} : () => upvotePost(ref),
+                          icon: post.upVotes.contains(user.uid)
+                              ? SvgPicture.asset(
+                                  "assets/images/svgs/home/upvote_filled.svg",
+                                  colorFilter: ColorFilter.mode(
+                                    Theme.of(context).hintColor,
+                                    BlendMode.srcIn,
+                                  ),
+                                )
+                              : SvgPicture.asset(
+                                  "assets/images/svgs/home/upvote.svg",
+                                  colorFilter: ColorFilter.mode(
+                                    Theme.of(context).hintColor,
+                                    BlendMode.srcIn,
+                                  ),
                                 ),
-                              )
-                            : SvgPicture.asset(
-                                "assets/images/svgs/home/upvote.svg",
-                                colorFilter: ColorFilter.mode(
-                                  Theme.of(context).hintColor,
-                                  BlendMode.srcIn,
+                        ),
+                        text17Medium(
+                          context: context,
+                          text:
+                              '${post.upVotes.length - post.downVotes.length == 0 ? 'Vote' : post.upVotes.length - post.downVotes.length}',
+                        ),
+                        iconButton(
+                          onPressed: isGuest ? () {} : () => downVotePost(ref),
+                          icon: post.downVotes.contains(user.uid)
+                              ? SvgPicture.asset(
+                                  "assets/images/svgs/home/downvote_filled.svg",
+                                  colorFilter: ColorFilter.mode(
+                                    Theme.of(context).hintColor,
+                                    BlendMode.srcIn,
+                                  ),
+                                )
+                              : SvgPicture.asset(
+                                  "assets/images/svgs/home/downvote.svg",
+                                  colorFilter: ColorFilter.mode(
+                                    Theme.of(context).hintColor,
+                                    BlendMode.srcIn,
+                                  ),
                                 ),
-                              ),
-                      ),
-                      text17Medium(
-                        context: context,
-                        text:
-                            '${post.upVotes.length - post.downVotes.length == 0 ? 'Vote' : post.upVotes.length - post.downVotes.length}',
-                      ),
-                      iconButton(
-                        onPressed: isGuest ? () {} : () => downVotePost(ref),
-                        icon: post.downVotes.contains(user.uid)
-                            ? SvgPicture.asset(
-                                "assets/images/svgs/home/downvote_filled.svg",
-                                colorFilter: ColorFilter.mode(
-                                  Theme.of(context).hintColor,
-                                  BlendMode.srcIn,
-                                ),
-                              )
-                            : SvgPicture.asset(
-                                "assets/images/svgs/home/downvote.svg",
-                                colorFilter: ColorFilter.mode(
-                                  Theme.of(context).hintColor,
-                                  BlendMode.srcIn,
-                                ),
-                              ),
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
                 Expanded(
                   child: Column(
                     children: [
