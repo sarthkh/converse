@@ -247,8 +247,6 @@ Widget text16Bold({
       fontSize: 16,
       color: Theme.of(context).textTheme.bodyLarge!.color,
     ),
-    overflow: TextOverflow.ellipsis,
-    maxLines: 1,
   );
 }
 

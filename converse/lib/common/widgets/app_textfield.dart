@@ -140,10 +140,12 @@ Widget textField({
   required TextEditingController controller,
   required String hintText,
   int? maxLines,
-  int? maxLength
+  int? maxLength,
+  Function(String)? onSubmitted,
 }) {
   return TextField(
     controller: controller,
+    onSubmitted: onSubmitted,
     decoration: InputDecoration(
       filled: true,
       hintText: hintText,
@@ -153,11 +155,17 @@ Widget textField({
         ),
         borderRadius: BorderRadius.circular(7.75),
       ),
-      border: InputBorder.none,
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Theme.of(context).hintColor,
+        ),
+        borderRadius: BorderRadius.circular(7.75),
+      ),
       contentPadding: const EdgeInsets.all(17.5),
     ),
     style: text18MediumStyle(context),
     maxLines: maxLines,
     maxLength: maxLength,
+    cursorColor: Theme.of(context).hintColor,
   );
 }

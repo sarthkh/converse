@@ -131,7 +131,7 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
                     context: context,
                     controller: titleController,
                     hintText: "Enter Title",
-                    maxLength: 50,
+                    maxLength: 150,
                   ),
                   const SizedBox(height: 25),
                   if (isTypeImage)

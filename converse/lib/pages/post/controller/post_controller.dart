@@ -1,5 +1,6 @@
 import 'package:converse/auth/controller/auth_controller.dart';
 import 'package:converse/common/widgets/popup_message.dart';
+import 'package:converse/models/comment_model.dart';
 import 'package:converse/models/conclave_model.dart';
 import 'package:converse/models/post_model.dart';
 import 'package:converse/pages/post/repository/post_repository.dart';
@@ -9,8 +10,7 @@ import 'package:go_router/go_router.dart';
 import 'dart:io';
 import 'package:converse/providers/storage_repository_provider.dart';
 import 'package:uuid/uuid.dart';
-
-import '../../../common/widgets/compress_file.dart';
+import 'package:converse/common/widgets/compress_file.dart';
 
 final postControllerProvider =
     StateNotifierProvider<PostController, bool>((ref) {
@@ -28,6 +28,18 @@ final userPostsProvider =
   final postController = ref.watch(postControllerProvider.notifier);
 
   return postController.fetchUserPosts(conclaves);
+});
+
+final getPostByIdProvider = StreamProvider.family((ref, String postId) {
+  final postController = ref.watch(postControllerProvider.notifier);
+
+  return postController.getPostById(postId);
+});
+
+final getCommentsOfPostProvider = StreamProvider.family((ref, String postId) {
+  final postController = ref.watch(postControllerProvider.notifier);
+
+  return postController.fetchCommentsOfPost(postId);
 });
 
 class PostController extends StateNotifier<bool> {
@@ -241,5 +253,41 @@ class PostController extends StateNotifier<bool> {
   void downvote(Post post) {
     final uid = _ref.read(userProvider)!.uid;
     _postRepository.downVote(post, uid);
+  }
+
+  Stream<Post> getPostById(String postId) {
+    return _postRepository.getPostById(postId);
+  }
+
+  void addPostComment({
+    required BuildContext context,
+    required String text,
+    required Post post,
+  }) async {
+    final user = _ref.read(userProvider)!;
+    final commentId = const Uuid().v1();
+    Comment comment = Comment(
+      id: commentId,
+      text: text,
+      createdAt: DateTime.now(),
+      postId: post.id,
+      username: user.name,
+      avatar: user.avatar,
+    );
+
+    final res = await _postRepository.addPostComment(comment);
+
+    res.fold(
+      (l) => toastInfo(
+        context: context,
+        msg: l.message,
+        type: ToastType.fail,
+      ),
+      (r) => null,
+    );
+  }
+
+  Stream<List<Comment>> fetchCommentsOfPost(String postId) {
+    return _postRepository.getCommentsOfPost(postId);
   }
 }

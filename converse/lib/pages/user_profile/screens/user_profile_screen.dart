@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:converse/auth/controller/auth_controller.dart';
 import 'package:converse/common/widgets/app_shimmer.dart';
 import 'package:converse/common/widgets/button_widgets.dart';
@@ -6,10 +7,12 @@ import 'package:converse/common/widgets/error_text.dart';
 import 'package:converse/common/widgets/image_widgets.dart';
 import 'package:converse/common/widgets/loader.dart';
 import 'package:converse/common/widgets/text_widgets.dart';
+import 'package:converse/pages/user_profile/controller/user_profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:converse/common/widgets/post_card.dart';
 
 class UserProfileScreen extends ConsumerWidget {
   final String uId;
@@ -52,6 +55,21 @@ class UserProfileScreen extends ConsumerWidget {
                                 colorFilter: ColorFilter.mode(
                                   Theme.of(context).primaryColor,
                                   BlendMode.srcIn,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned.fill(
+                            child: ClipRect(
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(
+                                  sigmaX: 0.125,
+                                  sigmaY: 0.125,
+                                ),
+                                child: Container(
+                                  color: Theme.of(context)
+                                      .cardColor
+                                      .withOpacity(0.25),
                                 ),
                               ),
                             ),
@@ -110,10 +128,22 @@ class UserProfileScreen extends ConsumerWidget {
                     ),
                   ];
                 },
-                body: text25Bold(
-                  context: context,
-                  text: "Displaying Posts",
-                ),
+                body: ref.watch(getUserPostsProvider(uId)).when(
+                      data: (data) {
+                        return ListView.builder(
+                          itemCount: data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final post = data[index];
+                            return PostCard(post: post);
+                          },
+                        );
+                      },
+                      error: (error, stackTrace) {
+                        print(error.toString());
+                        return ErrorText(error: error.toString());
+                      },
+                      loading: () => const Loader(),
+                    ),
               ),
               error: (error, stackTrace) => ErrorText(
                 error: error.toString(),

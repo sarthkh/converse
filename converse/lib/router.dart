@@ -6,6 +6,7 @@ import 'package:converse/pages/conclave/screens/mod_tools_screen.dart';
 import 'package:converse/pages/home/home.dart';
 import 'package:converse/pages/login/login.dart';
 import 'package:converse/pages/post/screens/add_post_type_screen.dart';
+import 'package:converse/pages/post/screens/post_comment_screen.dart';
 import 'package:converse/pages/signup/signup.dart';
 import 'package:converse/pages/user_profile/screens/edit_profile_screen.dart';
 import 'package:converse/pages/user_profile/screens/user_profile_screen.dart';
@@ -124,6 +125,15 @@ final loggedIn = GoRouter(
       pageBuilder: (context, state) => MaterialPage(
         child: AddPostTypeScreen(
           type: state.pathParameters['type']!,
+        ),
+      ),
+    ),
+    GoRoute(
+      name: 'post-comment-screen',
+      path: '/post/:postId/comments',
+      pageBuilder: (context, state) => MaterialPage(
+        child: PostCommentScreen(
+          postId: state.pathParameters['postId']!,
         ),
       ),
     ),

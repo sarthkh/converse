@@ -55,7 +55,7 @@ class SearchConclaveDelegate extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     return ref.watch(searchConclaveProvider(query)).when(
           data: (conclaves) => Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20).copyWith(top: 5),
             child: ListView.builder(
               itemCount: conclaves.length,
               itemBuilder: (BuildContext context, int index) {
@@ -93,9 +93,13 @@ class SearchConclaveDelegate extends SearchDelegate {
     return theme.copyWith(
       inputDecorationTheme: InputDecorationTheme(
         hintStyle: text20MediumStyle(context),
+        border: InputBorder.none,
       ),
       textTheme: TextTheme(
         bodyLarge: text20MediumStyle(context),
+      ),
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: Theme.of(context).hintColor,
       ),
     );
   }

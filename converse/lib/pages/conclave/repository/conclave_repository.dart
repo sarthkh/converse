@@ -6,6 +6,7 @@ import 'package:converse/models/conclave_model.dart';
 import 'package:converse/providers/firebase_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:converse/models/post_model.dart';
 
 final conclaveRepositoryProvider = Provider((ref) {
   return ConclaveRepository(
@@ -23,6 +24,9 @@ class ConclaveRepository {
   // getter for reference to Firestore collection
   CollectionReference get _conclaves =>
       _firebaseFirestore.collection(FirebaseConstants.conclaveCollection);
+
+  CollectionReference get _posts =>
+      _firebaseFirestore.collection(FirebaseConstants.postsCollection);
 
   FutureVoid craftConclave(Conclave conclave) async {
     try {
@@ -158,5 +162,25 @@ class ConclaveRepository {
         Failure(e.toString()),
       );
     }
+  }
+
+  Stream<List<Post>> getConclavePosts(String name) {
+    return _posts
+        .where(
+          'conclaveName',
+          isEqualTo: name,
+        )
+        .orderBy(
+          'createdAt',
+          descending: true,
+        )
+        .snapshots()
+        .map(
+          (event) => event.docs
+              .map(
+                (e) => Post.fromMap(e.data() as Map<String, dynamic>),
+              )
+              .toList(),
+        );
   }
 }

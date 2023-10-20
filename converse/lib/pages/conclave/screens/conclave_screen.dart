@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:converse/auth/controller/auth_controller.dart';
 import 'package:converse/common/widgets/app_shimmer.dart';
 import 'package:converse/common/widgets/button_widgets.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:converse/models/conclave_model.dart';
+import 'package:converse/common/widgets/post_card.dart';
 
 class ConclaveScreen extends ConsumerWidget {
   final String name;
@@ -66,6 +68,21 @@ class ConclaveScreen extends ConsumerWidget {
                               ),
                             ),
                           ),
+                          Positioned.fill(
+                            child: ClipRect(
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(
+                                  sigmaX: 0.125,
+                                  sigmaY: 0.125,
+                                ),
+                                child: Container(
+                                  color: Theme.of(context)
+                                      .cardColor
+                                      .withOpacity(0.25),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -106,8 +123,8 @@ class ConclaveScreen extends ConsumerWidget {
                                       )
                                     : outlinedButton(
                                         context: context,
-                                        onPressed: () =>
-                                            joinConclave(ref, context, conclave),
+                                        onPressed: () => joinConclave(
+                                            ref, context, conclave),
                                         child: text17SemiBoldItalic(
                                           context: context,
                                           text: conclave.conversers
@@ -129,8 +146,8 @@ class ConclaveScreen extends ConsumerWidget {
                                         : "${conclave.conversers.length} Conversers",
                                   ),
                                   Padding(
-                                    padding:
-                                        const EdgeInsets.symmetric(horizontal: 5),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 5),
                                     child: text16Medium(
                                       context: context,
                                       text: "·",
@@ -151,10 +168,20 @@ class ConclaveScreen extends ConsumerWidget {
                     ),
                   ];
                 },
-                body: text25Bold(
-                  context: context,
-                  text: "Displaying Posts",
-                ),
+                body: ref.watch(getConclavePostsProvider(name)).when(
+                      data: (data) {
+                        return ListView.builder(
+                          itemCount: data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            final post = data[index];
+                            return PostCard(post: post);
+                          },
+                        );
+                      },
+                      error: (error, stackTrace) =>
+                          ErrorText(error: error.toString()),
+                      loading: () => const Loader(),
+                    ),
               ),
               error: (error, stackTrace) => ErrorText(
                 error: error.toString(),

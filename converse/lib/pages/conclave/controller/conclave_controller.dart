@@ -11,6 +11,7 @@ import 'package:go_router/go_router.dart';
 import 'dart:io';
 import 'package:converse/providers/storage_repository_provider.dart';
 import 'package:converse/core/failure.dart';
+import 'package:converse/models/post_model.dart';
 
 final conclaveControllerProvider =
     StateNotifierProvider<ConclaveController, bool>((ref) {
@@ -34,6 +35,10 @@ final getConclaveByNameProvider = StreamProvider.family((ref, String name) {
 
 final searchConclaveProvider = StreamProvider.family((ref, String query) {
   return ref.watch(conclaveControllerProvider.notifier).searchConclave(query);
+});
+
+final getConclavePostsProvider = StreamProvider.family((ref, String name) {
+  return ref.read(conclaveControllerProvider.notifier).getConclavePosts(name);
 });
 
 class ConclaveController extends StateNotifier<bool> {
@@ -243,5 +248,9 @@ class ConclaveController extends StateNotifier<bool> {
       ),
       (r) => GoRouter.of(context).pop(),
     );
+  }
+
+  Stream<List<Post>> getConclavePosts(String name) {
+    return _conclaveRepository.getConclavePosts(name);
   }
 }
