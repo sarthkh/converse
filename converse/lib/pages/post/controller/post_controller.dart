@@ -237,11 +237,15 @@ class PostController extends StateNotifier<bool> {
 
     res.fold(
       (l) => null,
-      (r) => toastInfo(
-        context: context,
-        msg: "Post Deleted Successfully!",
-        type: ToastType.pass,
-      ),
+      (r) {
+        toastInfo(
+          context: context,
+          msg: "Post Deleted Successfully!",
+          type: ToastType.pass,
+        );
+
+        GoRouter.of(context).pop();
+      },
     );
   }
 

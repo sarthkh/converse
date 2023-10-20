@@ -18,8 +18,8 @@ class CommentCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        vertical: 16,
-        horizontal: 8,
+        vertical: 8,
+        horizontal: 16,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,12 +32,13 @@ class CommentCard extends ConsumerWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      text16SemiBold(
+                      text16Bold(
                         context: context,
                         text: "u/${comment.username}",
                       ),
-                      text16Medium(
+                      text16SemiBold(
                         context: context,
                         text: comment.text,
                       ),
@@ -59,7 +60,7 @@ class CommentCard extends ConsumerWidget {
                   ),
                 ),
               ),
-              text14Medium(
+              text16Medium(
                 context: context,
                 text: "Reply",
               ),

@@ -43,7 +43,11 @@ class PostCard extends ConsumerWidget {
   }
 
   void navigateToPostCommentScreen(BuildContext context) {
-    GoRouter.of(context).push('/post/${post.id}/comments');
+    final currentRoute = GoRouterState.of(context).uri.toString();
+    final postCommentPageRoute = '/post/${post.id}/comments';
+    if (currentRoute != postCommentPageRoute) {
+      GoRouter.of(context).push(postCommentPageRoute);
+    }
   }
 
   @override

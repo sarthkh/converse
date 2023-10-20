@@ -164,6 +164,7 @@ flutter:
     - assets/images/svgs/home/downvote.svg
     - assets/images/svgs/home/downvote_filled.svg
     - assets/images/svgs/home/mod_tools.svg
+    - assets/images/svgs/home/send_comment.svg
     - assets/images/svgs/home/reply.svg
     # conclave
     - assets/images/svgs/conclave/conclave.svg

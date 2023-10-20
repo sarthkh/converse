@@ -141,14 +141,15 @@ Widget textField({
   required String hintText,
   int? maxLines,
   int? maxLength,
-  Function(String)? onSubmitted,
+  Widget? suffixIcon,
 }) {
   return TextField(
+    autocorrect: true,
     controller: controller,
-    onSubmitted: onSubmitted,
     decoration: InputDecoration(
       filled: true,
       hintText: hintText,
+      suffixIcon: suffixIcon,
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: Theme.of(context).primaryColor,
