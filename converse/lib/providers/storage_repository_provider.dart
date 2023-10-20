@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:converse/core/failure.dart';
-import 'package:converse/core/type_defs.dart';
+import 'package:converse/core/providers/failure.dart';
+import 'package:converse/core/providers/type_defs.dart';
 import 'package:converse/providers/firebase_providers.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -8,7 +8,7 @@ import 'package:converse/common/widgets/loader.dart';
 import 'package:converse/common/widgets/popup_message.dart';
 import 'package:converse/common/widgets/text_widgets.dart';
 import 'package:converse/constants/constants.dart';
-import 'package:converse/core/utils.dart';
+import 'package:converse/core/providers/utils.dart';
 import 'package:converse/pages/user_profile/controller/user_profile_controller.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';

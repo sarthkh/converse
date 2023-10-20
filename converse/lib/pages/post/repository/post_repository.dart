@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:converse/constants/firebase_constants.dart';
-import 'package:converse/core/failure.dart';
-import 'package:converse/core/type_defs.dart';
+import 'package:converse/core/providers/failure.dart';
+import 'package:converse/core/providers/type_defs.dart';
 import 'package:converse/models/post_model.dart';
 import 'package:converse/providers/firebase_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -4,8 +4,8 @@ import 'package:converse/models/post_model.dart';
 import 'package:converse/models/user_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:converse/core/failure.dart';
-import 'package:converse/core/type_defs.dart';
+import 'package:converse/core/providers/failure.dart';
+import 'package:converse/core/providers/type_defs.dart';
 import 'package:converse/providers/firebase_providers.dart';
 
 final userProfileRepositoryProvider = Provider((ref) {

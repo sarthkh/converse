@@ -1,4 +1,4 @@
-import 'package:converse/core/failure.dart';
+import 'package:converse/core/providers/failure.dart';
 import 'package:fpdart/fpdart.dart';
 
 // FutureEither<UserModel>

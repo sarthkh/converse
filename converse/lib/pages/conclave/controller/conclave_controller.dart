@@ -10,7 +10,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:io';
 import 'package:converse/providers/storage_repository_provider.dart';
-import 'package:converse/core/failure.dart';
+import 'package:converse/core/providers/failure.dart';
 import 'package:converse/models/post_model.dart';
 
 final conclaveControllerProvider =

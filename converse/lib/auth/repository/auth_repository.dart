@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:converse/constants/constants.dart';
 import 'package:converse/constants/firebase_constants.dart';
-import 'package:converse/core/failure.dart';
-import 'package:converse/core/type_defs.dart';
+import 'package:converse/core/providers/failure.dart';
+import 'package:converse/core/providers/type_defs.dart';
 import 'package:converse/models/user_model.dart';
 import 'package:converse/providers/firebase_providers.dart';
 import 'package:firebase_auth/firebase_auth.dart';

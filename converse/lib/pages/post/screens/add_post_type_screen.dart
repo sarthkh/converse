@@ -10,7 +10,7 @@ import 'package:converse/pages/post/controller/post_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:converse/core/utils.dart';
+import 'package:converse/core/providers/utils.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'dart:io';
 import 'package:converse/models/conclave_model.dart';
