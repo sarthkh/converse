@@ -43,9 +43,10 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
 
     if (res != null) {
       if (kIsWeb) {
-        bannerWebFile = res.files.first.bytes;
+        setState(() {
+          bannerWebFile = res.files.first.bytes;
+        });
       }
-
       setState(() {
         bannerFile = File(res.files.first.path!);
       });
@@ -68,8 +69,8 @@ class _AddPostTypeScreenState extends ConsumerState<AddPostTypeScreen> {
             context: context,
             title: titleController.text.trim(),
             selectedConclave: selectedConclave ?? conclaves[0],
-            webFile: bannerWebFile,
             file: bannerFile,
+            webFile: bannerWebFile,
           );
     } else if (widget.type == 'Text' && titleController.text.isNotEmpty) {
       ref.read(postControllerProvider.notifier).shareTextPost(

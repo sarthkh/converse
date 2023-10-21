@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:converse/core/providers/failure.dart';
 import 'package:converse/core/providers/type_defs.dart';
 import 'package:converse/providers/firebase_providers.dart';
