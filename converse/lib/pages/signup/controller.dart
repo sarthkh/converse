@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:converse/common/widgets/popup_message.dart';
+import '../../auth/controller/auth_controller.dart';
 import 'notifier/signup_notifier.dart';
 
 class SignUpController {
@@ -69,5 +70,9 @@ class SignUpController {
       );
       return;
     }
+
+    ref
+        .read(authControllerProvider.notifier)
+        .signUpWithEmail(context, email, password, name);
   }
 }

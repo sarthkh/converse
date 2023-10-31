@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 
 class UserModel {
   final String name;
+  final String? email;
+  final String? password;
   final String avatar;
   final String banner;
   final String uid;
@@ -11,6 +13,8 @@ class UserModel {
 
   UserModel({
     required this.name,
+    this.email,
+    this.password,
     required this.avatar,
     required this.banner,
     required this.uid,
@@ -21,6 +25,8 @@ class UserModel {
 
   UserModel copyWith({
     String? name,
+    ValueGetter<String?>? email,
+    ValueGetter<String?>? password,
     String? avatar,
     String? banner,
     String? uid,
@@ -30,6 +36,8 @@ class UserModel {
   }) {
     return UserModel(
       name: name ?? this.name,
+      email: email != null ? email() : this.email,
+      password: password != null ? password() : this.password,
       avatar: avatar ?? this.avatar,
       banner: banner ?? this.banner,
       uid: uid ?? this.uid,
@@ -42,6 +50,8 @@ class UserModel {
   Map<String, dynamic> toMap() {
     return {
       'name': name,
+      'email': email,
+      'password': password,
       'avatar': avatar,
       'banner': banner,
       'uid': uid,
@@ -54,6 +64,8 @@ class UserModel {
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
       name: map['name'] ?? '',
+      email: map['email'],
+      password: map['password'],
       avatar: map['avatar'] ?? '',
       banner: map['banner'] ?? '',
       uid: map['uid'] ?? '',
@@ -65,7 +77,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(name: $name, avatar: $avatar, banner: $banner, uid: $uid, isAuthenticated: $isAuthenticated, karma: $karma, awards: $awards)';
+    return 'UserModel(name: $name, email: $email, password: $password, avatar: $avatar, banner: $banner, uid: $uid, isAuthenticated: $isAuthenticated, karma: $karma, awards: $awards)';
   }
 
   @override
@@ -74,6 +86,8 @@ class UserModel {
 
     return other is UserModel &&
         other.name == name &&
+        other.email == email &&
+        other.password == password &&
         other.avatar == avatar &&
         other.banner == banner &&
         other.uid == uid &&
@@ -85,6 +99,8 @@ class UserModel {
   @override
   int get hashCode {
     return name.hashCode ^
+        email.hashCode ^
+        password.hashCode ^
         avatar.hashCode ^
         banner.hashCode ^
         uid.hashCode ^

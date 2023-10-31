@@ -82,4 +82,40 @@ class AuthController extends StateNotifier<bool> {
       (r) => _ref.read(userProvider.notifier).update((state) => r),
     );
   }
+
+  void facebookSignIn(BuildContext context, bool isFromLogin) async {
+    state = true; // start loading
+    final user = await _authRepository.signInWithFacebook(isFromLogin);
+    state = false; // stop loading
+
+    // l -> failure, r -> success
+    user.fold(
+      (l) => toastInfo(
+        context: context,
+        msg: l.message,
+        type: ToastType.fail,
+      ),
+      // on success update the userProvider state with new user
+      (r) => _ref.read(userProvider.notifier).update((state) => r),
+    );
+  }
+
+  void signUpWithEmail(BuildContext context, String email, String password,
+      String username) async {
+    state = true; // start loading
+    final user =
+        await _authRepository.signUpWithEmail(email, password, username);
+    state = false; // stop loading
+
+    // l -> failure, r -> success
+    user.fold(
+      (l) => toastInfo(
+        context: context,
+        msg: l.message,
+        type: ToastType.fail,
+      ),
+      // on success update the userProvider state with new user
+      (r) => _ref.read(userProvider.notifier).update((state) => r),
+    );
+  }
 }

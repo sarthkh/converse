@@ -9,6 +9,10 @@ void googleSignIn(BuildContext context, WidgetRef ref) {
   ref.read(authControllerProvider.notifier).googleSignIn(context, isFromLogin);
 }
 
+void facebookSignIn(BuildContext context, WidgetRef ref) {
+  ref.read(authControllerProvider.notifier).facebookSignIn(context, isFromLogin);
+}
+
 Widget thirdPartyLogin(BuildContext context, WidgetRef ref) {
   return Container(
     margin: const EdgeInsets.only(
@@ -29,11 +33,11 @@ Widget thirdPartyLogin(BuildContext context, WidgetRef ref) {
         _loginButton(
           context: context,
           imagePath: "assets/images/svgs/register/facebook.svg",
-          onTap: () {},
+          onTap: () => facebookSignIn(context, ref),
         ),
         _loginButton(
           context: context,
-          imagePath: "assets/images/svgs/register/x.svg",
+          imagePath: "assets/images/svgs/register/phone.svg",
           onTap: () {},
         ),
       ],

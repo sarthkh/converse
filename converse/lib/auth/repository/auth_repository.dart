@@ -10,6 +10,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:crypt/crypt.dart';
 
 final authRepositoryProvider = Provider(
   (ref) => AuthRepository(
@@ -150,5 +152,89 @@ class AuthRepository {
   void logout() async {
     _googleSignIn.signOut();
     await _firebaseAuth.signOut();
+  }
+
+  FutureEither<UserModel> signInWithFacebook(bool isFromLogin) async {
+    try {
+      // Trigger the sign-in flow
+      final LoginResult result = await FacebookAuth.instance.login();
+
+      // Create a credential from the access token
+      final OAuthCredential facebookAuthCredential =
+          FacebookAuthProvider.credential(result.accessToken!.token);
+
+      UserCredential userCredential;
+
+      if (isFromLogin) {
+        userCredential =
+            await _firebaseAuth.signInWithCredential(facebookAuthCredential);
+      } else {
+        userCredential = await _firebaseAuth.currentUser!
+            .linkWithCredential(facebookAuthCredential);
+      }
+
+      UserModel userModel;
+      // user is new
+      if (userCredential.additionalUserInfo!.isNewUser) {
+        userModel = UserModel(
+          name: userCredential.user!.displayName ?? "Converser",
+          avatar: userCredential.user!.photoURL ?? Constants.avatarDefault,
+          banner: Constants.bannerDefault,
+          uid: userCredential.user!.uid,
+          isAuthenticated: true,
+          karma: 0,
+          awards: [
+            'awesomeAns',
+            'gold',
+            'platinum',
+            'helpful',
+            'plusone',
+            'rocket',
+            'thankyou',
+            'til',
+          ],
+        );
+        await _users.doc(userCredential.user!.uid).set(userModel.toMap());
+      }
+      // user is not new
+      else {
+        userModel = await getUserData(userCredential.user!.uid).first;
+      }
+      // right -> success
+      return right(userModel);
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      // left -> failure
+      return left(
+        Failure(e.toString()),
+      );
+    }
+  }
+
+  FutureEither<UserModel> signUpWithEmail(
+      String email, String password, String username) async {
+    try {
+      UserCredential userCredential = await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
+      String hashedPassword = Crypt.sha256(password).toString();
+      UserModel userModel = UserModel(
+        name: username,
+        email: email,
+        password: hashedPassword,
+        avatar: Constants.avatarDefault,
+        banner: Constants.bannerDefault,
+        uid: userCredential.user!.uid,
+        isAuthenticated: true,
+        karma: 0,
+        awards: [],
+      );
+      await _users.doc(userCredential.user!.uid).set(userModel.toMap());
+      return right(userModel);
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return left(Failure(e.toString()));
+    }
   }
 }

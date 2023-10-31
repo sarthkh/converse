@@ -70,6 +70,7 @@ dependencies:
   any_link_preview: ^3.0.1
   url_launcher: ^6.1.14
   flutter_facebook_auth: ^6.0.2
+  crypt: ^4.3.1
 
 dev_dependencies:
   flutter_test:
@@ -146,7 +147,7 @@ flutter:
     # register
     - assets/images/svgs/register/google.svg
     - assets/images/svgs/register/facebook.svg
-    - assets/images/svgs/register/x.svg
+    - assets/images/svgs/register/phone.svg
     - assets/images/svgs/register/user.svg
     - assets/images/svgs/register/mail.svg
     - assets/images/svgs/register/lock.svg
