@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Converse App</string>
+    <string name="facebook_app_id">1650599232100330</string>
+    <string name="fb_login_protocol_scheme">fb1650599232100330</string>
+    <string name="facebook_client_token">88a182670e749da71fe9d3379ceacb86</string>
+</resources>

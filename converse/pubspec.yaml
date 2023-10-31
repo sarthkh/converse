@@ -69,6 +69,7 @@ dependencies:
   uuid: ^3.0.7
   any_link_preview: ^3.0.1
   url_launcher: ^6.1.14
+  flutter_facebook_auth: ^6.0.2
 
 dev_dependencies:
   flutter_test:
