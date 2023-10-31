@@ -18,6 +18,7 @@ final authRepositoryProvider = Provider(
     firebaseFirestore: ref.read(firebaseFireStoreProvider),
     firebaseAuth: ref.read(firebaseAuthProvider),
     googleSignIn: ref.read(googleSignInProvider),
+    facebookAuth: ref.read(facebookSignInProvider),
   ),
 );
 
@@ -25,13 +26,16 @@ class AuthRepository {
   final FirebaseFirestore _firebaseFirestore;
   final FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
+  final FacebookAuth _facebookAuth;
 
   AuthRepository({
     required FirebaseFirestore firebaseFirestore,
     required FirebaseAuth firebaseAuth,
     required GoogleSignIn googleSignIn,
+    required FacebookAuth facebookAuth,
   })  : _firebaseFirestore = firebaseFirestore,
         _firebaseAuth = firebaseAuth,
+        _facebookAuth = facebookAuth,
         _googleSignIn = googleSignIn;
 
   // getter for reference to Firestore collection
@@ -151,6 +155,7 @@ class AuthRepository {
 
   void logout() async {
     _googleSignIn.signOut();
+    _facebookAuth.logOut();
     await _firebaseAuth.signOut();
   }
 
